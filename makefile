@@ -16,7 +16,7 @@ LD = g++
 # C flags
 CFLAGS = 
 # C++ flags
-CXXFLAGS = 
+CXXFLAGS = -fsanitize=address
 # C/C++ flags
 CPPFLAGS = -Wall
 # dependency-generation flags
