@@ -13,13 +13,13 @@ static int getFileSize(FILE *fp){
 }
 
 
-static char* resolvepath(char *relitivepath){
+static char* resolvepath(char *relativepath){
     //char buf[PATH_MAX];
-    char *res = realpath(relitivepath, NULL);
+    char *res = realpath(relativepath, NULL);
     if(res){
         return res;
     } else {
-        printf("Error: could not resolve file [%s]", relitivepath);
+        printf("Error: could not resolve file [%s]", relativepath);
         return NULL;
     }
 }
