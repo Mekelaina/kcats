@@ -9,6 +9,12 @@ int main(int argc, char *argv[]){
         return 0;
     }
 
-    readfile(argv[1]);
+    Reader reader;
+    initReader(&reader);
+    setFile(&reader, argv[1]);
+    readFile(&reader);
+    printf("%s\n", reader.content);
+    freeReader(&reader);
+
     return 0;
 }

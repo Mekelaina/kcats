@@ -1,10 +1,10 @@
 #include "reader.h"
-#include <malloc.h>
-#include <stdlib.h>
-#include <linux/limits.h>
-#include <stdio.h>
 
-static int fsize(FILE *fp){
+#include <malloc.h>
+#include <linux/limits.h>
+#include <stdlib.h>
+
+static int getFileSize(FILE *fp){
     int prev = ftell(fp);
     fseek(fp, 0L, SEEK_END);
     int sz = ftell(fp);
@@ -14,43 +14,80 @@ static int fsize(FILE *fp){
 
 
 static char* resolvepath(char *relitivepath){
-    char buf[PATH_MAX];
-    char *res = realpath(relitivepath, buf);
+    //char buf[PATH_MAX];
+    char *res = realpath(relitivepath, NULL);
     if(res){
-        return *buf;
+        return res;
     } else {
         printf("Error: could not resolve file [%s]", relitivepath);
-        exit(1);
+        return NULL;
     }
 }
 
-void readfile(char *path_in){
 
-    FILE *fp;
-    char *filepath = resolvepath(path_in);
+void initReader(Reader *reader){
+    reader->file = NULL;
+    reader->filepath = NULL;
+    reader->filesize = 0;
+    reader->content = NULL;
+}
 
-    fp = fopen(filepath, "r");
-    
-    if(fp == NULL){
-        printf("%s:%s", "Error opening file", filepath);
-        exit(1);
+void freeReader(Reader *reader){
+    free(reader->filepath);
+    free(reader->content);
+}
+
+bool setFile(Reader *reader, char *filepath){
+    char *path = resolvepath(filepath);
+    if(path != NULL){
+        reader->filepath = path;
+        return true;
+    } else {
+        printf("%s", "path null");
+        reader->filepath = NULL;
+        return false;
     }
-    
-    int filesize = fsize(fp);
-    char *buff = malloc(sizeof(char) * (filesize + 1));
-    for(int i = 0; i < filesize + 1; i++){
+}
+
+bool readFile(Reader *reader){
+
+    if(reader->filepath == NULL){
+        return false;
+    }
+
+    FILE *fp = fopen(reader->filepath, "r");
+
+    if(fp == NULL){
+        printf("%s:%s", "Error opening file", reader->filepath);
+        return false;
+    }
+
+    int fsize = getFileSize(fp);
+    char *content = malloc(sizeof(char) * (fsize + 1));
+
+    for(int i = 0; i < fsize + 1; i++){
         int c = fgetc(fp);
         if(feof(fp)){
             break;
         }
-
-        buff[i] = c;
+        content[i] = c;
     }
 
     fclose(fp);
     
-    printf("%s",buff);
-    printf("\n");
+    reader->file = fp;
+    reader->filesize = fsize;
+    reader->content = content;
 
-    free(buff);
+    return true;
 }
+
+bool readFileFromPath(Reader *reader, char *filepath){
+    if(!setFile(reader, filepath)) return false;
+    if(!readFile(reader)) return false;
+    return true;
+}
+
+
+
+
