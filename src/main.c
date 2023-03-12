@@ -1,7 +1,14 @@
 #include <stdio.h>
 
-int main(){
+#include "reader.h"
 
-    printf("%s", "hello, world!\n");
+int main(int argc, char *argv[]){
+
+    if(argc < 1){
+        printf("Please provide a .kcats file to run.");
+        return 0;
+    }
+
+    readfile(argv[1]);
     return 0;
 }
