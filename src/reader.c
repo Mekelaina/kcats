@@ -67,6 +67,7 @@ bool readFile(Reader *reader){
 
     if(content == NULL){
         printf("ERROR: Could not allocate necessary memory.\n");
+        fclose(fp);
         exit(1);
     }
 
@@ -77,6 +78,8 @@ bool readFile(Reader *reader){
         }
         content[i] = c;
     }
+
+    content[fsize] = '\0';
 
     fclose(fp);
     
