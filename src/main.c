@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[]){
 
-    if(argc < 1){
+    if(argc < 2){
         printf("Please provide a .kcats file to run.");
         return 0;
     }
