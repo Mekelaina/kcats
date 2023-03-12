@@ -65,6 +65,11 @@ bool readFile(Reader *reader){
     int fsize = getFileSize(fp);
     char *content = malloc(sizeof(char) * (fsize + 1));
 
+    if(content == NULL){
+        printf("ERROR: Could not allocate necessary memory.\n");
+        exit(1);
+    }
+
     for(int i = 0; i < fsize + 1; i++){
         int c = fgetc(fp);
         if(feof(fp)){
