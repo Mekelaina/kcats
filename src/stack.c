@@ -4,6 +4,7 @@
 // intialize stack to default values
 void init(Stack *s){
     s->top = STACK_MAX;
+    s->count = 0;
     for(int i = 0; i <= STACK_MAX; ++i){
         s->data[i] = 0;
     }
@@ -15,6 +16,7 @@ void push(Stack *s, uint8_t value){
     
     if(s->top != 0){
         s->top--;
+        s->count++;
     }
 }
 
@@ -23,7 +25,8 @@ uint8_t pop(Stack *s){
     uint8_t x;
     
     if(s->top != STACK_MAX){
-        s->top++;    
+        s->top++;
+        s->count--;    
     } 
 
     x = s->data[s->top];
@@ -45,7 +48,8 @@ uint8_t peak(Stack *s){
 // pop and discard the top value on the stack
 void drop(Stack *s){
     if(s->top != STACK_MAX){
-        s->top++;    
+        s->top++;
+        s->count--;    
     } 
 
     s->data[s->top] = 0;
@@ -53,8 +57,8 @@ void drop(Stack *s){
 
 // print out the whole stack for debugging
 void dump(Stack *s){
-    printf("DEBUG:\n       ----- Stack Dump -----\n");
-    printf("       Stack Top: %d\n", s->top);
+    printf("DEBUG:\n       -----  Stack Dump  -----\n");
+    printf("       Stack Top: %d  Stack Count: %d\n", s->top, s->count);
     int c = 0;
     printf("       ");
     for(int i = STACK_MAX; i >= 0; --i){

@@ -8,6 +8,7 @@
 typedef struct stack {
     uint8_t data[STACK_MAX + 1];
     uint8_t top;
+    uint8_t count;
 } Stack;
 
 // intialize stack to default values
