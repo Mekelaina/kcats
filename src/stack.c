@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 // intialize stack to default values
-void init(Stack *s){
+void init_stack(Stack *s){
     s->top = STACK_MAX;
     s->count = 0;
     for(int i = 0; i <= STACK_MAX; ++i){
