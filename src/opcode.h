@@ -2,9 +2,9 @@
 #define KCATS_OPCODE_H
 
 typedef enum Opcode{
-    NO_OP = 0,
-    HALT,
-    HALT_W_EXITCODE,
+    NO_OP = 0, // No operation
+    HALT,      // Halt the program
+    HALT_W_EXITCODE, // Halt the program with an exit code
     
     // Load X
     LOAD_X,    // No argument, pops from stack stores in X
