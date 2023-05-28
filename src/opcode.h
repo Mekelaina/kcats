@@ -128,7 +128,7 @@ typedef enum Opcode{
     JRM_XY,   // if the remainder flag is set, Jumps to the address using the vals in X and Y. X is high byte, Y is low byte
 
     // Arithmatic
-    ADD,      // pops top 2 vals on stack, adds them, pushes the result (1st off + 2nd off)
+    ADD,      // pops top 2 vals on stack, adds them, pushes the result (2nd off + 1st off)
     ADD_IM,   // pops the top value on the stack, adds the immediate value to it, pushes the result
     ADD_IM_L, // adds the two immediate vals and pushes the result
     ADD_X,    // pops top val on stack, adds val in X, pushes result
@@ -142,21 +142,21 @@ typedef enum Opcode{
     SUB_Y,    // pops top val on stack, subtracts val in Y from it, pushes result
     SUB_XY,   // subtracts X from Y and pushes the result
     
-    MUL,      // pops top 2 vals on stack, multiplies them, pushes the result (1st off * 2nd off)
+    MUL,      // pops top 2 vals on stack, multiplies them, pushes the result (2nd off * 1st off)
     MUL_IM,   // pops the top value on the stack, multiplies the immediate value to it, pushes the result
     MUL_IM_L, // multiplies the two immediate vals and pushes the result
     MUL_X,    // pops top val on stack, multiplies it by the val in X, pushes result
     MUL_Y,    // pops top val on stack, multiplies it by the val in Y, pushes result
     MUL_XY,   // multiplies X and Y and pushes the result
     
-    DIV,      // pops top 2 vals on stack, divides them, pushes the result (1st off / 2nd off)
+    DIV,      // pops top 2 vals on stack, divides them, pushes the result (2nd off / 1st off)
     DIV_IM,   // pops the top value on the stack, divides it by the immediate value, pushes the result
     DIV_IM_L, // divides the two immediate vals and pushes the result (a / b)
     DIV_X,    // pops top val on stack, divides it by val in X, pushes result
     DIV_Y,    // pops top val on stack, divides it by val in Y, pushes result
     DIV_XY,   // divides X by Y and pushes the result
     
-    MOD,      // pops top 2 vals on stack, takes the modulus of them, pushes the result (1st off % 2nd off)
+    MOD,      // pops top 2 vals on stack, takes the modulus of them, pushes the result (2nd off % 1st off)
     MOD_IM,   // pops the top value on the stack, takes the modulus of it and the immediate value, pushes the result
     MOD_IM_L, // takes the modulus of the two immediate vals and pushes the result (a % b)
     MOD_X,    // pops top val on stack, modulo by val in X, pushes result
@@ -210,11 +210,11 @@ typedef enum Opcode{
     NOT_Y,    // inverts bits of Y, pushes result
 
     // Boolean Operations
-    LTH,      // pops top 2 vals on stack, evals if(1st off < 2nd off) sets bool flag if true, clears it if false
-    LTH_IM,   // pops top val on stack, evals if(off < immediate val) sets bool flag if true, clears it if false
-    LTH_X,    // pops top val on stack, evals if(off < val in X) sets bool flag if true, clears it if false
-    LTH_Y,    // pops top val on stack, evals if(off < val in Y) sets bool flag if true, clears it if false
-    LTH_Z,    // pops top val on stack, evals if(off < val in Z) sets bool flag if true, clears it if false
+    LTH,      // peaks top 2 vals on stack, evals if(2nd off < 1st off) sets bool flag if true, clears it if false
+    LTH_IM,   // peaks top val on stack, evals if(off < immediate val) sets bool flag if true, clears it if false
+    LTH_X,    // peaks top val on stack, evals if(off < val in X) sets bool flag if true, clears it if false
+    LTH_Y,    // peaks top val on stack, evals if(off < val in Y) sets bool flag if true, clears it if false
+    LTH_Z,    // peaks top val on stack, evals if(off < val in Z) sets bool flag if true, clears it if false
     LTH_X_IM, // evals if(val in X < immediate val) sets bool flag if true, clears it if false
     LTH_X_Y,  // evals if(val in X < val in Y) sets bool flag if true, clears it if false
     LTH_X_Z,  // evals if(val in X < val in Z) sets bool flag if true, clears it if false
@@ -225,11 +225,11 @@ typedef enum Opcode{
     LTH_Z_X,  // evals if(val in Z < val in X) sets bool flag if true, clears it if false     
     LTH_Z_Y,  // evals if(val in Z < val in Y) sets bool flag if true, clears it if false     
 
-    GTH,      // pops top 2 vals on stack, evals if(1st off > 2nd off) sets bool flag if true, clears it if false
-    GTH_IM,   // pops top val on stack, evals if(off > immediate val) sets bool flag if true, clears it if false
-    GTH_X,    // pops top val on stack, evals if(off > val in X) sets bool flag if true, clears it if false
-    GTH_Y,    // pops top val on stack, evals if(off > val in Y) sets bool flag if true, clears it if false
-    GTH_Z,    // pops top val on stack, evals if(off > val in Z) sets bool flag if true, clears it if false
+    GTH,      // peaks top 2 vals on stack, evals if(2nd off > 1st off) sets bool flag if true, clears it if false
+    GTH_IM,   // peaks top val on stack, evals if(off > immediate val) sets bool flag if true, clears it if false
+    GTH_X,    // peaks top val on stack, evals if(off > val in X) sets bool flag if true, clears it if false
+    GTH_Y,    // peaks top val on stack, evals if(off > val in Y) sets bool flag if true, clears it if false
+    GTH_Z,    // peaks top val on stack, evals if(off > val in Z) sets bool flag if true, clears it if false
     GTH_X_IM, // evals if(val in X > immediate val) sets bool flag if true, clears it if false
     GTH_X_Y,  // evals if(val in X > val in Y) sets bool flag if true, clears it if false
     GTH_X_Z,  // evals if(val in X > val in Z) sets bool flag if true, clears it if false
@@ -240,11 +240,11 @@ typedef enum Opcode{
     GTH_Z_X,  // evals if(val in Z > val in X) sets bool flag if true, clears it if false     
     GTH_Z_Y,  // evals if(val in Z > val in Y) sets bool flag if true, clears it if false     
 
-    LEQ,      // pops top 2 vals on stack, evals if(1st off <= 2nd off) sets bool flag if true, clears it if false
-    LEQ_IM,   // pops top val on stack, evals if(off <= immediate val) sets bool flag if true, clears it if false
-    LEQ_X,    // pops top val on stack, evals if(off <= val in X) sets bool flag if true, clears it if false
-    LEQ_Y,    // pops top val on stack, evals if(off <= val in Y) sets bool flag if true, clears it if false
-    LEQ_Z,    // pops top val on stack, evals if(off <= val in Z) sets bool flag if true, clears it if false
+    LEQ,      // peaks top 2 vals on stack, evals if(2nd off <= 1st off) sets bool flag if true, clears it if false
+    LEQ_IM,   // peaks top val on stack, evals if(off <= immediate val) sets bool flag if true, clears it if false
+    LEQ_X,    // peaks top val on stack, evals if(off <= val in X) sets bool flag if true, clears it if false
+    LEQ_Y,    // peaks top val on stack, evals if(off <= val in Y) sets bool flag if true, clears it if false
+    LEQ_Z,    // peaks top val on stack, evals if(off <= val in Z) sets bool flag if true, clears it if false
     LEQ_X_IM, // evals if(val in X <= immediate val) sets bool flag if true, clears it if false
     LEQ_X_Y,  // evals if(val in X <= val in Y) sets bool flag if true, clears it if false
     LEQ_X_Z,  // evals if(val in X <= val in Z) sets bool flag if true, clears it if false
@@ -255,11 +255,11 @@ typedef enum Opcode{
     LEQ_Z_X,  // evals if(val in Z <= val in X) sets bool flag if true, clears it if false     
     LEQ_Z_Y,  // evals if(val in Z <= val in Y) sets bool flag if true, clears it if false     
 
-    GEQ,      // pops top 2 vals on stack, evals if(1st off >= 2nd off) sets bool flag if true, clears it if false
-    GEQ_IM,   // pops top val on stack, evals if(off >= immediate val) sets bool flag if true, clears it if false
-    GEQ_X,    // pops top val on stack, evals if(off >= val in X) sets bool flag if true, clears it if false
-    GEQ_Y,    // pops top val on stack, evals if(off >= val in Y) sets bool flag if true, clears it if false
-    GEQ_Z,    // pops top val on stack, evals if(off >= val in Z) sets bool flag if true, clears it if false
+    GEQ,      // peaks top 2 vals on stack, evals if(2nd off >= 1st off) sets bool flag if true, clears it if false
+    GEQ_IM,   // peaks top val on stack, evals if(off >= immediate val) sets bool flag if true, clears it if false
+    GEQ_X,    // peaks top val on stack, evals if(off >= val in X) sets bool flag if true, clears it if false
+    GEQ_Y,    // peaks top val on stack, evals if(off >= val in Y) sets bool flag if true, clears it if false
+    GEQ_Z,    // peaks top val on stack, evals if(off >= val in Z) sets bool flag if true, clears it if false
     GEQ_X_IM, // evals if(val in X >= immediate val) sets bool flag if true, clears it if false
     GEQ_X_Y,  // evals if(val in X >= val in Y) sets bool flag if true, clears it if false
     GEQ_X_Z,  // evals if(val in X >= val in Z) sets bool flag if true, clears it if false
@@ -270,11 +270,11 @@ typedef enum Opcode{
     LEQ_Z_X,  // evals if(val in Z >= val in X) sets bool flag if true, clears it if false     
     LEQ_Z_Y,  // evals if(val in Z >= val in Y) sets bool flag if true, clears it if false     
 
-    EQU,      // pops top 2 vals on stack, evals if(1st off == 2nd off) sets bool flag if true, clears it if false
-    EQU_IM,   // pops top val on stack, evals if(off == immediate val) sets bool flag if true, clears it if false
-    EQU_X,    // pops top val on stack, evals if(off == val in X) sets bool flag if true, clears it if false
-    EQU_Y,    // pops top val on stack, evals if(off == val in Y) sets bool flag if true, clears it if false
-    EQU_Z,    // pops top val on stack, evals if(off == val in Z) sets bool flag if true, clears it if false
+    EQU,      // peaks top 2 vals on stack, evals if(2nd off == 1st off) sets bool flag if true, clears it if false
+    EQU_IM,   // peaks top val on stack, evals if(off == immediate val) sets bool flag if true, clears it if false
+    EQU_X,    // peaks top val on stack, evals if(off == val in X) sets bool flag if true, clears it if false
+    EQU_Y,    // peaks top val on stack, evals if(off == val in Y) sets bool flag if true, clears it if false
+    EQU_Z,    // peaks top val on stack, evals if(off == val in Z) sets bool flag if true, clears it if false
     EQU_X_IM, // evals if(val in X == immediate val) sets bool flag if true, clears it if false
     EQU_X_Y,  // evals if(val in X == val in Y) sets bool flag if true, clears it if false
     EQU_X_Z,  // evals if(val in X == val in Z) sets bool flag if true, clears it if false
@@ -285,11 +285,11 @@ typedef enum Opcode{
     EQU_Z_X,  // evals if(val in Z == val in X) sets bool flag if true, clears it if false     
     EQU_Z_Y,  // evals if(val in Z == val in Y) sets bool flag if true, clears it if false     
 
-    NEQ,      // pops top 2 vals on stack, evals if(1st off != 2nd off) sets bool flag if true, clears it if false
-    NEQ_IM,   // pops top val on stack, evals if(off != immediate val) sets bool flag if true, clears it if false
-    NEQ_X,    // pops top val on stack, evals if(off != val in X) sets bool flag if true, clears it if false
-    NEQ_Y,    // pops top val on stack, evals if(off != val in Y) sets bool flag if true, clears it if false
-    NEQ_Z,    // pops top val on stack, evals if(off != val in Z) sets bool flag if true, clears it if false
+    NEQ,      // peaks top 2 vals on stack, evals if(2nd off != 1st off) sets bool flag if true, clears it if false
+    NEQ_IM,   // peaks top val on stack, evals if(off != immediate val) sets bool flag if true, clears it if false
+    NEQ_X,    // peaks top val on stack, evals if(off != val in X) sets bool flag if true, clears it if false
+    NEQ_Y,    // peaks top val on stack, evals if(off != val in Y) sets bool flag if true, clears it if false
+    NEQ_Z,    // peaks top val on stack, evals if(off != val in Z) sets bool flag if true, clears it if false
     NEQ_X_IM, // evals if(val in X != immediate val) sets bool flag if true, clears it if false
     NEQ_X_Y,  // evals if(val in X != val in Y) sets bool flag if true, clears it if false
     NEQ_X_Z,  // evals if(val in X != val in Z) sets bool flag if true, clears it if false
