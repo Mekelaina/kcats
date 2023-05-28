@@ -271,7 +271,7 @@
 | | |
 |---|---|
 | **1** | If the result of this operation is outside the range of an unsigned 8bit integer (0-255) it will roll over and set the carry flag |
-| **2** | This operation involves division, as such there is the potential for a division by zero error to occur if the divisor is 0, then the calculation will not happen. the values will be pushed back to the stack in the order they were removed, and the Divide by Zero Flag will be set. |
+| **2** | This operation involves division, as such there is the potential for a division by zero error to occur. If the divisor is 0, then the calculation will not happen. the values will be pushed back to the stack in the order they were removed, and the Divide by Zero Flag will be set. |
 
 <hr><br><br>
 
