@@ -18,6 +18,9 @@ typedef enum Opcode{
     LOAD_Y_X,  // Loads Y with val in X
     LOAD_Y_Z,  // Loads Y with val in Z (num in elements in stack)
 
+    // Swap X and Y
+    SWP_XY,    // Swaps values in X and Y
+
     // Inc/Dec
     INC_X, // Increment X
     DEC_X, // Decrement X
@@ -132,7 +135,7 @@ typedef enum Opcode{
     ADD_Y,    // pops top val on stack, adds val in Y, pushes result
     ADD_XY,   // adds X and Y, pushes the result
 
-    SUB,      // pops top 2 vals on stack, subtracts them, pushes the result (1st off - 2nd off)
+    SUB,      // pops top 2 vals on stack, subtracts them, pushes the result (2nd off - 1st off)
     SUB_IM,   // pops the top value on the stack, subtracts the immediate value from it, pushes the result
     SUB_IM_L, // subtracts the two immediate vals and pushes the result (a - b)
     SUB_X,    // pops top val on stack, subtracts val in X from it, pushes result
