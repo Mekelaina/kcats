@@ -14,6 +14,7 @@ typedef struct stack {
 // intialize stack to default values
 void init_stack(Stack *s);
 
+
 // push a value onto the stack
 void push(Stack *s, uint8_t value);
 
