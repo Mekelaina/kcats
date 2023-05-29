@@ -24,29 +24,38 @@ static void execute(VM *vm){
     
     switch(vm->OP){
         case NO_OP: break;
-        case HALT: {
-            vm->flags.H = 1;
+
+        case POP: {
+            pop(&(vm->stack));
+        } break;
+        case PUSH: {
+            push(&(vm->stack), peak(&(vm->stack)));
+        } break;
+        case PUSH_IM: { 
+            push(&(vm->stack), fetchArg(vm));
+        } break;
+        case PUSH_X: {
+            push(&(vm->stack), vm->REG_X);
+        } break;
+        case PUSH_Y: {
+            push(&(vm->stack), vm->REG_Y);
         } break;
         case LOAD_X: {
             vm->REG_X = pop(&(vm->stack));
         } break;
         case INC_X: {
-            a = vm->REG_X;
-            a++;
-            if(a == 0){
+            vm->REG_X++;
+
+            if(vm->REG_X == 0){
                 vm->flags.C = 1;
             }
-            vm->REG_X = a;
         } break;
-        case PUSH_IM: {
-            a = fetchArg(vm);
-            push(&(vm->stack), a);
-        } break;
-        case PUSH_X: {
-            push(&(vm->stack), vm->REG_X);
-        } break;
+
         case NUM_OUT: {
             printf("%d\n", pop(&(vm->stack)));
+        } break;
+        case HALT: {
+            vm->flags.H = 1;
         } break;
         default: {
             printf("unimplemented opcode: %d\n", vm->OP);
