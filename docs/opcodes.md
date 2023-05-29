@@ -2,264 +2,177 @@
 
 
 
-| Index | Instruction | Nmemonic | Addressing Mode | Opcode | Syntax | Description |
+| Instruction | Nmemonic | Addressing Mode | Opcode | Syntax | Description |  |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| 0 | No Op | NOP | Implied | 00 | `NOP` | No Operation. skips current clock cycle |
-| 1 | Halt | HLT | Implied | 01 | `HLT` | Halts the program (implied successful/ zero exitcode) |
-| 2 | Halt w/ Exitcode | HLT | Immediate | 02 | `HLT $val` | Halts the program with the specified exitcode |
-| 3 | Load X | LDX | Implied | 03 | `LDX` | Pops top of the stack and stores it in X |
-| 4 | Load X | LDX | Immediate | 04 | `LDX $val` | Loads X with the immediate value |
-| 5 | Load X | LDX | Y Register | 05 | `LDX Y` | Loads X with the value in Y |
-| 6 | Load X | LDX | Z Register | 06 | `LDX Z` | Loads X with the value of Z |
-| 7 | Load Y | LDY | Implied | 07 | `LDY` | Pops top of the stack and stores it in Y |
-| 8 | Load Y | LDY | Immediate | 08 | `LDY $val` | Loads Y with the immediate value |
-| 9 | Load Y | LDY | X Register | 09 | `LDY X` | Loads Y with the value in X |
-| 10 | Load Y | LDY | Z Register | 0A | `LDY Z` | Loads Y with the value of Z |
-| 11 | Swap Y and X | SYX | Implied | 0B | `SYX` | Swaps the values in Y and X directly |
-| 12 | Increment X | INX | Implied | 0C | `INX` | Increments the value of X |
-| 13 | Decrement X | DEX | Implied | 0D | `DEX` | Decrements the value of X |
-| 14 | Increment Y | INY | Implied | 0E | `INY` | Increments the value of Y |
-| 15 | Decrement Y | DEY | Implied | 0F | `DEY` | Decrements the value of Y |
-| 16 | Clear Carry Flag | CLC | Implied | 10 | `CLC` | Clears the Carry Flag |
-| 17 | Clear Boolean Flag | CBL | Implied | 11 | `CBL` | Clears the Boolean Flag |
-| 18 | Clear Zero Flag | CZR | Implied | 12 | `CZR` | Clears the Zero Flag |
-| 19 | Clear Div By Zero Flag | CDZ | Implied | 13 | `CDZ` | Clears the Div By Zero Flag |
-| 20 | Clear Remainder Flag | CRM | Implied | 14 | `CRM` | Clears the Remainder Flag |
-| 21 | Pop from Stack | POP | Implied | 15 | `POP` | Discards the value on the top of the stack |
-| 22 | Pop from Stack | POP | Immediate | 16 | `POP $val` | Discards the value on the top of the stackvalue times. |
-| 23 | Pop from Stack | POP | X Register | 17 | `POP X` | Pops the value on the top of the stack and stores it in X |
-| 24 | Pop from Stack | POP | Y Register | 18 | `POP Y` | Pops the value on the top of the stack and stores it in Y |
-| 25 | Push to Stack | PSH | Implied | 19 | `PSH` | Duplicates the value on the top of the stack |
-| 26 | Push to Stack | PSH | Immediate | 1A | `PSH $val` | Push the immediate value to the stack |
-| 27 | Push to Stack | PSH | X Register | 1B | `PSH X` | Push the value of X to the stack |
-| 28 | Push to Stack | PSH | Y Register | 1C | `PSH Y` | Push the value of Y to the stack |
-| 29 | Output as Number | OUT | Implied | 1D | `OUT` | Prints the top value of the stack as a number |
-| 30 | Output as Number | OUT | Immediate | 1E | `OUT $val` | Prints the immediate value as a number |
-| 31 | Output as Number | OUT | X Register | 1F | `OUT X` | Print the value of X as a number |
-| 32 | Output as Number | OUT | Y Register | 20 | `Out Y` | Print the value of Y as a number |
-| 33 | Output as Number | Out | Z Register | 21 | `Out Z` | Print the value of Z as a number |
-| 34 | Print as ASCII | PRT | Implied | 22 | `PRT` | Prints the top value of the stack as ASCII |
-| 35 | Print as ASCII | PRT | Immediate | 23 | `PRT $val` | Prints the immediate value as ASCII |
-| 36 | Print as ASCII | PRT | X Register | 24 | `PRT X` | Prints the value of X as ASCII |
-| 37 | Print as ASCII | PRT | Y Register | 25 | `PRT Y` | Prints the value of Y as ASCII |
-| 38 | Get Input from Console | INP | Implied | 26 | `INP` | Get input from console and push it to stack |
-| 39 | Get Input from Console | INP | X Register | 27 | `INP X` | Get input from console and store it in X |
-| 40 | Get Input from Console | INP | Y Register | 28 | `INP Y` | Get input from console and store it in Y |
-| 41 | Unconditional Jump | JMP | Implied | 29 | `JMP` | Pops the value on top of the stack and jumps to that address |
-| 42 | Unconditional Jump | JMP | Implied | 2A | `JMP` | Pops the top two values of the stack and jumps to that 16bit address.LB popped first. |
-| 43 | Unconditional Jump | JMP | Immediate | 2B | `JMP $val` | Jumps to the address specified by the immediate val |
-| 44 | Unconditional Jump | JMP | Immediate (2 byte) | 2C | `JMP $HBLB`/`JMP $HB $LB` | Jumps to the 16bit address specified by the immediate vals |
-| 45 | Unconditional Jump | JMP | X Register | 2D | `JMP X` | Jumps to X's value as an address |
-| 46 | Unconditional Jump | JMP | Y Register | 2E | `JMP Y` | Jumps to Y's value as an address |
-| 47 | Unconditional Jump | JMP | X and Y Registers | 2F | `JMP X Y` | Jumps to X and Y's values as a single 16bit address.X is HB Y is LB |
-| 48 | Jump if Not Zero | JNZ | Implied | 30 | `JNZ` | If the Zero Flag is NOT set,Pops the value on top of the stack and jumps to that address |
-| 49 | Jump if Not Zero | JNZ | Implied | 31 | `JNZ` | If the Zero Flag is NOT set,Pops the top two values of the stack and jumps to that 16bit address.LB popped first. |
-| 50 | Jump if Not Zero | JNZ | Immediate | 32 | `JNZ $val` | If the Zero Flag is NOT set,Jumps to the address specified by the immediate val |
-| 51 | Jump if Not Zero | JNZ | Immediate (2 byte) | 33 | `JNZ $HBLB`/`JNZ $HB $LB` | If the Zero Flag is NOT set,Jumps to the 16bit address specified by the immediate vals |
-| 52 | Jump if Not Zero | JNZ | X Register | 34 | `JNZ X` | If the Zero Flag is NOT set,Jumps to X's value as an address |
-| 53 | Jump if Not Zero | JNZ | Y Register | 35 | `JNZ Y` | If the Zero Flag is NOT set,Jumps to Y's value as an address |
-| 54 | Jump if Not Zero | JNZ | X and Y Registers | 36 | `JNZ X Y` | If the Zero Flag is NOT set,Jumps to X and Y's values as a single 16bit address.X is HB Y is LB |
-| 55 | Jump if Zero | JZR | Implied | 37 | `JZR` | If the Zero Flag IS set,Pops the value on top of the stack and jumps to that address |
-| 56 | Jump if Zero | JZR | Implied | 38 | `JZR` | If the Zero Flag IS set,Pops the top two values of the stack and jumps to that 16bit address.LB popped first. |
-| 57 | Jump if Zero | JZR | Immediate | 39 | `JZR $val` | If the Zero Flag IS set,Jumps to the address specified by the immediate val |
-| 58 | Jump if Zero | JZR | Immediate (2 byte) | 3A | `JZR $HBLB`/`JZR $HB $LB` | If the Zero Flag IS set,Jumps to the 16bit address specified by the immediate vals |
-| 59 | Jump if Zero | JZR | X Register | 3B | `JZR X` | If the Zero Flag IS set,Jumps to X's value as an address |
-| 60 | Jump if Zero | JZR | Y Register | 3C | `JZR Y` | If the Zero Flag IS set,Jumps to Y's value as an address |
-| 61 | Jump if Zero | JZR | X and Y Registers | 3D | `JZR X Y` | If the Zero Flag IS set,Jumps to X and Y's values as a single 16bit address.X is HB Y is LB |
-| 62 | Jump if Carry | JFC | Implied | 3E | `JFC` | If the Carry Flag IS set,Pops the value on top of the stack and jumps to that address |
-| 63 | Jump if Carry | JFC | Implied | 3F | `JFC` | If the Carry Flag IS set,Pops the top two values of the stack and jumps to that 16bit address.LB popped first. |
-| 64 | Jump if Carry | JFC | Immediate | 40 | `JFC $val` | If the Carry Flag IS set,Jumps to the address specified by the immediate val |
-| 65 | Jump if Carry | JFC | Immediate (2 byte) | 41 | `JFC $HBLB`/`JFC $HB $LB` | If the Carry Flag IS set,Jumps to the 16bit address specified by the immediate vals |
-| 66 | Jump if Carry | JFC | X Register | 42 | `JFC X` | If the Carry Flag IS set,Jumps to X's value as an address |
-| 67 | Jump if Carry | JFC | Y Register | 43 | `JFC Y` | If the Carry Flag IS set,Jumps to Y's value as an address |
-| 68 | Jump if Carry | JFC | X and Y Registers | 44 | `JFC X Y` | If the Carry Flag IS set,Jumps to X and Y's values as a single 16bit address.X is HB Y is LB |
-| 69 | Jump if True | JIF | Implied | 45 | `JIF` | If the Boolean Flag IS set,Pops the value on top of the stack and jumps to that address |
-| 70 | Jump if True | JIF | Implied | 46 | `JIF` | If the Boolean Flag IS set,Pops the top two values of the stack and jumps to that 16bit address.LB popped first. |
-| 71 | Jump if True | JIF | Immediate | 47 | `JIF $val` | If the Boolean Flag IS set,Jumps to the address specified by the immediate val |
-| 72 | Jump if True | JIF | Immediate (2 byte) | 48 | `JIF $HBLB`/`JIF $HB $LB` | If the Boolean Flag IS set,Jumps to the 16bit address specified by the immediate vals |
-| 73 | Jump if True | JIF | X Register | 49 | `JIF X` | If the Boolean Flag IS set,Jumps to X's value as an address |
-| 74 | Jump if True | JIF | Y Register | 4A | `JIF Y` | If the Boolean Flag IS set,Jumps to Y's value as an address |
-| 75 | Jump if True | JIF | X and Y Registers | 4B | `JIF X Y` | If the Boolean Flag IS set,Jumps to X and Y's values as a single 16bit address.X is HB Y is LB |
-| 76 | Jump if False | JEL | Implied | 4C | `JEL` | If the Boolean Flag is NOT set,Pops the value on top of the stack and jumps to that address |
-| 77 | Jump if False | JEL | Implied | 4D | `JEL` | If the Boolean Flag is NOT set,Pops the top two values of the stack and jumps to that 16bit address.LB popped first. |
-| 78 | Jump if False | JEL | Immediate | 4E | `JEL $val` | If the Boolean Flag is NOT set,Jumps to the address specified by the immediate val |
-| 79 | Jump if False | JEL | Immediate (2 byte) | 4F | `JEL $HBLB`/`JEL $HB $LB` | If the Boolean Flag is NOT set,Jumps to the 16bit address specified by the immediate vals |
-| 80 | Jump if False | JEL | X Register | 50 | `JEL X` | If the Boolean Flag is NOT set,Jumps to X's value as an address |
-| 81 | Jump if False | JEL | Y Register | 51 | `JEL Y` | If the Boolean Flag is NOT set,Jumps to Y's value as an address |
-| 82 | Jump if False | JEL | X and Y Registers | 52 | `JEL X Y` | If the Boolean Flag is NOT set,Jumps to X and Y's values as a single 16bit address.X is HB Y is LB |
-| 83 | Jump if Div by Zero | JDZ | Implied | 53 | `JDZ` | If the Div by Zero Flag IS set,Pops the value on top of the stack and jumps to that address |
-| 84 | Jump if Div by Zero | JDZ | Implied | 54 | `JDZ` | If the Div by Zero Flag IS set,Pops the top two values of the stack and jumps to that 16bit address.LB popped first. |
-| 85 | Jump if Div by Zero | JDZ | Immediate | 55 | `JDZ $val` | If the Div by Zero Flag IS set,Jumps to the address specified by the immediate val |
-| 86 | Jump if Div by Zero | JDZ | Immediate (2 byte) | 56 | `JDZ $HBLB`/`JDZ $HB $LB` | If the Div by Zero Flag IS set,Jumps to the 16bit address specified by the immediate vals |
-| 87 | Jump if Div by Zero | JDZ | X Register | 57 | `JDZ X` | If the Div by Zero Flag IS set,Jumps to X's value as an address |
-| 88 | Jump if Div by Zero | JDZ | Y Register | 58 | `JDZ Y` | If the Div by Zero Flag IS set,Jumps to Y's value as an address |
-| 89 | Jump if Div by Zero | JDZ | X and Y Registers | 59 | `JDZ X Y` | If the Div by Zero Flag IS set,Jumps to X and Y's values as a single 16bit address.X is HB Y is LB |
-| 90 | Jump if Remainder | JRM | Implied | 5A | `JDZ` | If the Remainder Flag IS set,Pops the value on top of the stack and jumps to that address |
-| 91 | Jump if Remainder | JRM | Implied | 5B | `JDZ` | If the Remainder Flag IS set,Pops the top two values of the stack and jumps to that 16bit address.LB popped first. |
-| 92 | Jump if Remainder | JRM | Immediate | 5C | `JDZ $val` | If the Remainder Flag IS set,Jumps to the address specified by the immediate val |
-| 93 | Jump if Remainder | JRM | Immediate (2 byte) | 5D | `JDZ $HBLB`/`JDZ $HB $LB` | If the Remainder Flag IS set,Jumps to the 16bit address specified by the immediate vals |
-| 94 | Jump if Remainder | JRM | X Register | 5E | `JDZ X` | If the Remainder Flag IS set,Jumps to X's value as an address |
-| 95 | Jump if Remainder | JRM | Y Register | 5F | `JDZ Y` | If the Remainder Flag IS set,Jumps to Y's value as an address |
-| 96 | Jump if Remainder | JRM | X and Y Registers | 60 | `JDZ X Y` | If the Remainder Flag IS set,Jumps to X and Y's values as a single 16bit address.X is HB Y is LB |
-| 97 | Add<sup>1</sup> | ADD | Implied | 61 | `ADD` | Pops top two values off the stack stack, pushes their sum (2nd off + 1st off) |
-| 98 | Add<sup>1</sup> | ADD | Immediate | 62 | `ADD $val` | Pops top value off the stack, sums it and immediate val, pushes result (Top + Val) |
-| 99 | Add<sup>1</sup> | ADD | Immediate (2 byte) | 63 | `ADD $A $B` | Pushes the sum of two immediate values (A + B) |
-| 100 | Add<sup>1</sup> | ADD | X Register | 64 | `ADD X` | Pops top value off the stack, sums it and X, pushes result (Top + X) |
-| 101 | Add<sup>1</sup> | ADD | Y Register | 65 | `ADD Y` | Pops top value off the stack, sums it and Y, pushes result (Top + Y) |
-| 102 | Add<sup>1</sup> | ADD | X and Y Registers | 66 | `ADD X Y` | Pushes the sum of X and Y (X + Y) |
-| 103 | Subtract<sup>1</sup> | SUB | Implied | 67 | `SUB` | Pops top two values off the stack, pushes their difference. (2nd off - 1st off) |
-| 104 | Subtract<sup>1</sup> | SUB | Immediate | 68 | `SUB $val` | Pops top value off the stack, subtracts immediate value from it, pushes result (Top - Val) |
-| 105 | Subtract<sup>1</sup> | SUB | Immediate (2 byte) | 69 | `SUB $A $B` | Pushes the difference of two immediate values (A - B) |
-| 106 | Subtract<sup>1</sup> | SUB | X Register | 6A | `SUB X` | Pops top value off the stack, subtracts X from it, pushes result (Top - X) |
-| 107 | Subtract<sup>1</sup> | SUB | Y Register | 6B | `SUB Y` | Pops top value off the stack, subtracts Y from it, pushes result (Top - Y) |
-| 108 | Subtract<sup>1</sup> | SUB | X and Y Registers | 6C | `SUB X Y` | Pushes the difference of X and Y (X - Y) |
-| 109 | Multiply<sup>1</sup> | MUL | Implied | 6D | `MUL` | Pops top two values off the stack, pushes their product (2nd off * 1st off) |
-| 110 | Multiply<sup>1</sup> | MUL | Immediate | 6E | `MUL $val` | Pops top value off the stack, multiplies it by the immediate val, pushes result (Top * Val) |
-| 111 | Multiply<sup>1</sup> | MUL | Immediate (2 byte) | 6F | `MUL $A $B` | Pushes the product of two immediate values (A * B) |
-| 112 | Multiply<sup>1</sup> | MUL | X Register | 70 | `MUL X` | Pops top value off the stack, multiplies it by X, pushes result (Top * X) |
-| 113 | Multiply<sup>1</sup> | MUL | Y Register | 71 | `MUL Y` | Pops top value off the stack, multiplies it by Y, pushes result (Top * Y) |
-| 114 | Multiply<sup>1</sup> | MUL | X and Y Registers | 72 | `MUL X Y` | Pushes the product of X and Y (X * Y) |
-| 115 | Divide<sup>2</sup> | DIV | Implied | 73 | `DIV` | Pops top two values off the stack, pushes their quotient. sets Remainder Flag if the remainder is NOT 0. (2nd off / 1st off) |
-| 116 | Divide<sup>2</sup> | DIV | Immediate | 74 | `DIV $val` | Pops top value off the stack, divides it by the immediate val, pushes result. sets Remainder Flag if the remainder is NOT 0 (Top / Val) |
-| 117 | Divide<sup>2</sup> | DIV | Immediate (2 byte) | 75 | `DIV $A $B` | Pushes the quotient of two immediate values. sets Remainder Flag if the remainder is NOT 0 (A / B) |
-| 118 | Divide<sup>2</sup> | DIV | X Register | 76 | `DIV X` | Pops top value off the stack, divides it by X, pushes result. sets Remainder Flag if the remainder is NOT 0 (Top / X) |
-| 119 | Divide<sup>2</sup> | DIV | Y Register | 77 | `DIV Y` | Pops top value off the stack, divides it by Y, pushes result. sets Remainder Flag if the remainder is NOT 0 (Top / Y) |
-| 120 | Divide<sup>2</sup> | DIV | X and Y Registers | 78 | `DIV X Y` | Pushes the quotient of X and Y. sets Remainder Flag if the remainder is NOT 0 (X / Y) |
-| 121 | Modulus<sup>2</sup> | MOD | Implied | 79 | `MOD` | Pops top two values off the stack, pushes the modulus of the two. (2nd off % 1st off) |
-| 122 | Modulus<sup>2</sup> | MOD | Immediate | 7A | `MOD $val` | Pops top value off the stack, does it modulo immediate val, pushes result. (Top % val) |
-| 123 | Modulus<sup>2</sup> | MOD | Immediate (2 byte) | 7B | `MOD $A $B` | Pushes the modulus of two immediate values (A % B). |
-| 124 | Modulus<sup>2</sup> | MOD | X Register | 7C | `MOD X` | Pops top value off the stack, takes It modulo X, pushes result. (Top % X) |
-| 125 | Modulus<sup>2</sup> | MOD | Y Register | 7D | `MOD Y` | Pops top value off the stack, takes It modulo Y, pushes result. (Top % Y) |
-| 126 | Modulus<sup>2</sup> | MOD | X and Y Registers | 7E | `MOD X Y` | Pushes the modulus of X and Y. (X % Y) |
-| 127 | Rotate Left | ROL | Implied | 7F | `ROL` | Pops top value off the stack, rotates all bits to the left once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |
-| 128 | Rotate Left | ROL | Immediate | 80 | `ROL $val` | rotates all bits of immediate value to the left once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |
-| 129 | Rotate Left | ROL | X Register | 81 | `ROL X` | rotates all bits of X to the left once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |
-| 130 | Rotate Left | ROL | Y Register | 82 | `ROL Y` | rotates all bits of Y to the left once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |
-| 131 | Rotate Right | ROR | Implied | 83 | `ROR` | Pops top value off the stack, rotates all bits to the right once. pushes result. (Least significant bit wrapping around to most significant bit) (0001 -> 1000) |
-| 132 | Rotate Right | ROR | Immediate | 84 | `ROR $val` | rotates all bits of immediate value to the right once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |
-| 133 | Rotate Right | ROR | X Register | 85 | `ROR X` | rotates all bits of X to the right once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |
-| 134 | Rotate Right | ROR | Y Register | 86 | `ROR Y` | rotates all bits of Y to the right once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |
-| 135 | Shift Left | SHL | Implied | 87 | `SHL` | Pops top value off the stack, shifts all bits to the left once. pushes result. (vacent bits padded with zeros) (1001 -> 0010) |
-| 136 | Shift Left | SHL | Immediate | 88 | `SHL $val` | Shifts all bits of immediate value to the left once. pushes result. (vacent bits padded with zeros) (1001 -> 0010) |
-| 137 | Shift Left | SHL | X Register | 89 | `SHL X` | Shifts all bits of X to the left once. pushes result. (vacent bits padded with zeros) (1001 -> 0010) |
-| 138 | Shift Left | SHL | Y Register | 8A | `SHL Y` | Shifts all bits of Y to the left once. pushes result. (vacent bits padded with zeros) (1001 -> 0010) |
-| 139 | Shift Right | SHR | Implied | 8B | `SHR` | Pops top value off the stack, shifts all bits to the right once. pushes result. (vacent bits padded with zeros) (1001 -> 0100) |
-| 140 | Shift Right | SHR | Immediate | 8C | `SHR $val` | Shifts all bits of immediate value to the right once. pushes result. (vacent bits padded with zeros) (1001 -> 0100) |
-| 141 | Shift Right | SHR | X Register | 8D | `SHR X` | Shifts all bits of X to the right once. pushes result. (vacent bits padded with zeros) (1001 -> 0100) |
-| 142 | Shift Right | SHR | Y Register | 8E | `SHR Y` | Shifts all bits of Y to the right once. pushes result. (vacent bits padded with zeros) (1001 -> 0100) |
-| 143 | Bitwise And | AND | Implied | 8F | `AND` | Pops the top two values off the stack, preforms bitwise/binary and on them (2nd off & 1st off), pushes result |
-| 144 | Bitwise And | AND | Immediate | 90 | `AND $val` | Pops top value off the stack, preforms bitwise/binary and on it and the immediate value (Top & Val), pushes result |
-| 145 | Bitwise And | AND | Immediate (2 byte) | 91 | `AND $A $B` | Pushes the bitwise/binary and of the two immediate values (A & B) |
-| 146 | Bitwise And | AND | X Register | 92 | `AND X` | Pops top value off the stack, preforms bitwise/binary and on it and X (Top & X), pushes result |
-| 147 | Bitwise And | AND | Y Register | 93 | `AND Y` | Pops top value off the stack, preforms bitwise/binary and on it and Y (Top & Y), pushes result |
-| 148 | Bitwise And | AND | X and Y Registers | 94 | `AND X Y` | Pushes the bitwise/binary and of X and Y (X & Y) |
-| 149 | Bitwise Or | OR | Implied | 95 | `OR` | Pops the top two values off the stack, preforms bitwise/binary or on them (2nd off \| 1st off), pushes result |
-| 150 | Bitwise Or | OR | Immediate | 96 | `OR $val` | Pops top value off the stack, preforms bitwise/binary or on it and the immediate value (Top \| Val), pushes result |
-| 151 | Bitwise Or | OR | Immediate (2 byte) | 97 | `OR $A $B` | Pushes the bitwise/binary or of the two immediate values (A \| B) |
-| 152 | Bitwise Or | OR | X Register | 98 | `OR X` | Pops top value off the stack, preforms bitwise/binary or on it and X (Top \| X), pushes result |
-| 153 | Bitwise Or | OR | Y Register | 99 | `OR Y` | Pops top value off the stack, preforms bitwise/binary or on it and Y (Top \| Y), pushes result |
-| 154 | Bitwise Or | OR | X and Y Registers | 9A | `OR X Y` | Pushes the bitwise/binary or of X and Y (X \| Y) |
-| 155 | Bitwise Xor | XOR | Implied | 9B | `XOR` | Pops the top two values off the stack, preforms bitwise/binary xor on them (2nd off \^ 1st off), pushes result |
-| 156 | Bitwise Xor | XOR | Immediate | 9C | `XOR $val` | Pops top value off the stack, preforms bitwise/binary xor on it and the immediate value (Top \^ Val), pushes result |
-| 157 | Bitwise Xor | XOR | Immediate (2 byte) | 9D | `XOR $A $B` | Pushes the bitwise/binary xor of the two immediate values (A \^ B) |
-| 158 | Bitwise Xor | XOR | X Register | 9E | `XOR X` | Pops top value off the stack, preforms bitwise/binary xor on it and X (Top \^ X), pushes result |
-| 159 | Bitwise Xor | XOR | Y Register | 9F | `XOR Y` | Pops top value off the stack, preforms bitwise/binary xor on it and Y (Top \^ Y), pushes result |
-| 160 | Bitwise Xor | XOR | X and Y Registers | A0 | `XOR X Y` | Pushes the bitwise/binary xor of X and Y (X \^ Y) |
-| 161 | Not/Invert/Complement | NOT | Implied | A1 | `NOT` | Pops the top value off the stack,  inverts each bit (~Top ei 1001 -> 0110), pushes result |
-| 162 | Not/Invert/Complement | NOT | Immediate | A2 | `NOT $val` | Inverts each bit of immediate value (~Val ei 1001 -> 0110), pushes result |
-| 163 | Not/Invert/Complement | NOT | X Register | A3 | `NOT X` | Inverts each bit of X (~X ei 1001 -> 0110), pushes result |
-| 164 | Not/Invert/Complement | NOT | Y Register | A4 | `NOT Y` | Inverts each bit of Y (~Y ei 1001 -> 0110), pushes result |
-| 165 | Is Less Than | LTH | Implied | A5 | `LTH` | Peaks at the top two values off the stack. checks if 2nd off is less than the 1st off. sets the Boolean Flag if true, clears it if false. (2nd off < 1st off) |
-| 166 | Is Less Than | LTH | Immediate | A6 | `LTH $val` | Peaks at the top value off the stack. checks if it is less than the immediate value. sets the Boolean Flag if true, clears it if false. (Top < Val) |
-| 167 | Is Less Than | LTH | X Register | A7 | `LTH X` | Peaks at the top value off the stack. checks if it is less than the value in X. sets the Boolean Flag if true, clears it if false. (Top < Val) |
-| 168 | Is Less Than | LTH | Y Register | A8 | `LTH Y` | Peaks at the top value off the stack. checks if it is less than the value in Y. sets the Boolean Flag if true, clears it if false. (Top < Val) |
-| 169 | Is Less Than | LTH | Z Register | A9 | `LTH Z` | Peaks at the top value off the stack. checks if it is less than the value in Z. sets the Boolean Flag if true, clears it if false. (Top < Val) |
-| 170 | Is Less Than | LTH | X Register and Immediate | AA | `LTH X $val` | Checks if the value in X is less than the immediate value. sets the Boolean Flag if true, clears it if false. (X < Val) |
-| 171 | Is Less Than | LTH | X and Y Registers | AB | `LTH X Y` | Checks if the value in X is less than the value in Y. sets the Boolean Flag if true, clears it if false. (X < Y) |
-| 172 | Is Less Than | LTH | X and Z Registers | AC | `LTH X Z` | Checks if the value in X is less than the value in Z. sets the Boolean Flag if true, clears it if false. (X < Z) |
-| 173 | Is Less Than | LTH | Y Register and Immediate | AD | `LTH Y $val` | Checks if the value in Y is less than the immediate value. sets the Boolean Flag if true, clears it if false. (Y < Val) |
-| 174 | Is Less Than | LTH | Y and X Registers | AE | `LTH Y X` | Checks if the value in Y is less than the value in X. sets the Boolean Flag if true, clears it if false. (Y < X) |
-| 175 | Is Less Than | LTH | Y and Z Registers | AF | `LTH Y Z` | Checks if the value in Y is less than the value in Z. sets the Boolean Flag if true, clears it if false. (Y < Z) |
-| 176 | Is Less Than | LTH | Z Register and Immediate | B0 | `LTH Z $val` | Checks if the value in Z is less than the immediate value. sets the Boolean Flag if true, clears it if false. (Z < Val) |
-| 177 | Is Less Than | LTH | Z and X Registers | B1 | `LTH Z X` | Checks if the value in Z is less than the value in X. sets the Boolean Flag if true, clears it if false. (Z < X) |
-| 178 | Is Less Than | LTH | Z and Y Registers | B2 | `LTH Z Y` | Checks if the value in Z is less than the value in Z. sets the Boolean Flag if true, clears it if false. (Z < Y) |
-| 179 | Is Greater Than | GTH | Implied | B3 | `GTH` | Peaks at the top two values off the stack. checks if 2nd off is greater than the 1st off. sets the Boolean Flag if true, clears it if false. (2nd off > 1st off) |
-| 180 | Is Greater Than | GTH | Immediate | B4 | `GTH $val` | Peaks at the top value off the stack. checks if it is greater than the immediate value. sets the Boolean Flag if true, clears it if false. (Top > Val) |
-| 181 | Is Greater Than | GTH | X Register | B5 | `GTH X` | Peaks at the top value off the stack. checks if it is greater than the value in X. sets the Boolean Flag if true, clears it if false. (Top > Val) |
-| 182 | Is Greater Than | GTH | Y Register | B6 | `GTH Y` | Peaks at the top value off the stack. checks if it is greater than the value in Y. sets the Boolean Flag if true, clears it if false. (Top > Val) |
-| 183 | Is Greater Than | GTH | Z Register | B7 | `GTH Z` | Peaks at the top value off the stack. checks if it is greater than the value in Z. sets the Boolean Flag if true, clears it if false. (Top > Val) |
-| 184 | Is Greater Than | GTH | X Register and Immediate | B8 | `GTH X $val` | Checks if the value in X is greater than the immediate value. sets the Boolean Flag if true, clears it if false. (X > Val) |
-| 185 | Is Greater Than | GTH | X and Y Registers | B9 | `GTH X Y` | Checks if the value in X is greater than the value in Y. sets the Boolean Flag if true, clears it if false. (X > Y) |
-| 186 | Is Greater Than | GTH | X and Z Registers | BA | `GTH X Z` | Checks if the value in X is greater than the value in Z. sets the Boolean Flag if true, clears it if false. (X > Z) |
-| 187 | Is Greater Than | GTH | Y Register and Immediate | BB | `GTH Y $val` | Checks if the value in Y is greater than the immediate value. sets the Boolean Flag if true, clears it if false. (Y > Val) |
-| 188 | Is Greater Than | GTH | Y and X Registers | BC | `GTH Y X` | Checks if the value in Y is greater than the value in X. sets the Boolean Flag if true, clears it if false. (Y > X) |
-| 189 | Is Greater Than | GTH | Y and Z Registers | BD | `GTH Y Z` | Checks if the value in Y is greater than the value in Z. sets the Boolean Flag if true, clears it if false. (Y > Z) |
-| 190 | Is Greater Than | GTH | Z Register and Immediate | BE | `GTH Z $val` | Checks if the value in Z is greater than the immediate value. sets the Boolean Flag if true, clears it if false. (Z > Val) |
-| 191 | Is Greater Than | GTH | Z and X Registers | BF | `GTH Z X` | Checks if the value in Z is greater than the value in X. sets the Boolean Flag if true, clears it if false. (Z > X) |
-| 192 | Is Greater Than | GTH | Z and Y Registers | C0 | `GTH Z Y` | Checks if the value in Z is greater than the value in Z. sets the Boolean Flag if true, clears it if false. (Z > Y) |
-| 193 | Is Less Than or Equal To | LEQ | Implied | C1 | `LEQ` | Peaks at the top two values off the stack. checks if 2nd off is less than or equals the 1st off. sets the Boolean Flag if true, clears it if false. (2nd off <= 1st off) |
-| 194 | Is Less Than or Equal To | LEQ | Immediate | C2 | `LEQ $val` | Peaks at the top value off the stack. checks if it is less than or equals the immediate value. sets the Boolean Flag if true, clears it if false. (Top <= Val) |
-| 195 | Is Less Than or Equal To | LEQ | X Register | C3 | `LEQ X` | Peaks at the top value off the stack. checks if it is less than or equals the value in X. sets the Boolean Flag if true, clears it if false. (Top <= Val) |
-| 196 | Is Less Than or Equal To | LEQ | Y Register | C4 | `LEQ Y` | Peaks at the top value off the stack. checks if it is less than or equals the value in Y. sets the Boolean Flag if true, clears it if false. (Top <= Val) |
-| 197 | Is Less Than or Equal To | LEQ | Z Register | C5 | `LEQ Z` | Peaks at the top value off the stack. checks if it is less than or equals the value in Z. sets the Boolean Flag if true, clears it if false. (Top <= Val) |
-| 198 | Is Less Than or Equal To | LEQ | X Register and Immediate | C6 | `LEQ X $val` | Checks if the value in X is less than or equals the immediate value. sets the Boolean Flag if true, clears it if false. (X <= Val) |
-| 199 | Is Less Than or Equal To | LEQ | X and Y Registers | C7 | `LEQ X Y` | Checks if the value in X is less than or equals the value in Y. sets the Boolean Flag if true, clears it if false. (X <= Y) |
-| 200 | Is Less Than or Equal To | LEQ | X and Z Registers | C8 | `LEQ X Z` | Checks if the value in X is less than or equals the value in Z. sets the Boolean Flag if true, clears it if false. (X <= Z) |
-| 201 | Is Less Than or Equal To | LEQ | Y Register and Immediate | C9 | `LEQ Y $val` | Checks if the value in Y is less than or equals the immediate value. sets the Boolean Flag if true, clears it if false. (Y <= Val) |
-| 202 | Is Less Than or Equal To | LEQ | Y and X Registers | CA | `LEQ Y X` | Checks if the value in Y is less than or equals the value in X. sets the Boolean Flag if true, clears it if false. (Y <= X) |
-| 203 | Is Less Than or Equal To | LEQ | Y and Z Registers | CB | `LEQ Y Z` | Checks if the value in Y is less than or equals the value in Z. sets the Boolean Flag if true, clears it if false. (Y <= Z) |
-| 204 | Is Less Than or Equal To | LEQ | Z Register and Immediate | CC | `LEQ Z $val` | Checks if the value in Z is less than or equals the immediate value. sets the Boolean Flag if true, clears it if false. (Z <= Val) |
-| 205 | Is Less Than or Equal To | LEQ | Z and X Registers | CD | `LEQ Z X` | Checks if the value in Z is less than or equals the value in X. sets the Boolean Flag if true, clears it if false. (Z <= X) |
-| 206 | Is Less Than or Equal To | LEQ | Z and Y Registers | CE | `LEQ Z Y` | Checks if the value in Z is less than or equals the value in Z. sets the Boolean Flag if true, clears it if false. (Z <= Y) |
-| 207 | Is Greater Than or Equal To | GEQ | Implied | CF | `GEQ` | Peaks at the top two values off the stack. checks if 2nd off is greater than or equals the 1st off. sets the Boolean Flag if true, clears it if false. (2nd off >= 1st off) |
-| 208 | Is Greater Than or Equal To | GEQ | Immediate | D0 | `GEQ $val` | Peaks at the top value off the stack. checks if it is greater than or equals the immediate value. sets the Boolean Flag if true, clears it if false. (Top >= Val) |
-| 209 | Is Greater Than or Equal To | GEQ | X Register | D1 | `GEQ X` | Peaks at the top value off the stack. checks if it is greater than or equals the value in X. sets the Boolean Flag if true, clears it if false. (Top >= Val) |
-| 210 | Is Greater Than or Equal To | GEQ | Y Register | D2 | `GEQ Y` | Peaks at the top value off the stack. checks if it is greater than or equals the value in Y. sets the Boolean Flag if true, clears it if false. (Top >= Val) |
-| 211 | Is Greater Than or Equal To | GEQ | Z Register | D3 | `GEQ Z` | Peaks at the top value off the stack. checks if it is greater than or equals the value in Z. sets the Boolean Flag if true, clears it if false. (Top >= Val) |
-| 212 | Is Greater Than or Equal To | GEQ | X Register and Immediate | D4 | `GEQ X $val` | Checks if the value in X is greater than or equals the immediate value. sets the Boolean Flag if true, clears it if false. (X >= Val) |
-| 213 | Is Greater Than or Equal To | GEQ | X and Y Registers | D5 | `GEQ X Y` | Checks if the value in X is greater than or equals the value in Y. sets the Boolean Flag if true, clears it if false. (X >= Y) |
-| 214 | Is Greater Than or Equal To | GEQ | X and Z Registers | D6 | `GEQ X Z` | Checks if the value in X is greater than or equals the value in Z. sets the Boolean Flag if true, clears it if false. (X >= Z) |
-| 215 | Is Greater Than or Equal To | GEQ | Y Register and Immediate | D7 | `GEQ Y $val` | Checks if the value in Y is greater than or equals the immediate value. sets the Boolean Flag if true, clears it if false. (Y >= Val) |
-| 216 | Is Greater Than or Equal To | GEQ | Y and X Registers | D8 | `GEQ Y X` | Checks if the value in Y is greater than or equals the value in X. sets the Boolean Flag if true, clears it if false. (Y >= X) |
-| 217 | Is Greater Than or Equal To | GEQ | Y and Z Registers | D9 | `GEQ Y Z` | Checks if the value in Y is greater than or equals the value in Z. sets the Boolean Flag if true, clears it if false. (Y >= Z) |
-| 218 | Is Greater Than or Equal To | GEQ | Z Register and Immediate | DA | `GEQ Z $val` | Checks if the value in Z is greater than or equals the immediate value. sets the Boolean Flag if true, clears it if false. (Z >= Val) |
-| 219 | Is Greater Than or Equal To | GEQ | Z and X Registers | DB | `GEQ Z X` | Checks if the value in Z is greater than or equals the value in X. sets the Boolean Flag if true, clears it if false. (Z >= X) |
-| 220 | Is Greater Than or Equal To | GEQ | Z and Y Registers | DC | `GEQ Z Y` | Checks if the value in Z is greater than or equals the value in Z. sets the Boolean Flag if true, clears it if false. (Z >= Y) |
-| 221 | Is Equal To | EQU | Implied | DD | `EQU` | Peaks at the top two values off the stack. checks if 2nd off IS equal to the 1st off. sets the Boolean Flag if true, clears it if false. (2nd off == 1st off) |
-| 222 | Is Equal To | EQU | Immediate | DE | `EQU $val` | Peaks at the top value off the stack. checks if it IS equal to the immediate value. sets the Boolean Flag if true, clears it if false. (Top == Val) |
-| 223 | Is Equal To | EQU | X Register | DF | `EQU X` | Peaks at the top value off the stack. checks if it IS equal to the value in X. sets the Boolean Flag if true, clears it if false. (Top == Val) |
-| 224 | Is Equal To | EQU | Y Register | E0 | `EQU Y` | Peaks at the top value off the stack. checks if it IS equal to the value in Y. sets the Boolean Flag if true, clears it if false. (Top == Val) |
-| 225 | Is Equal To | EQU | Z Register | E1 | `EQU Z` | Peaks at the top value off the stack. checks if it IS equal to the value in Z. sets the Boolean Flag if true, clears it if false. (Top == Val) |
-| 226 | Is Equal To | EQU | X Register and Immediate | E2 | `EQU X $val` | Checks if the value in X IS equal to the immediate value. sets the Boolean Flag if true, clears it if false. (X == Val) |
-| 227 | Is Equal To | EQU | X and Y Registers | E3 | `EQU X Y` | Checks if the value in X IS equal to the value in Y. sets the Boolean Flag if true, clears it if false. (X == Y) |
-| 228 | Is Equal To | EQU | X and Z Registers | E4 | `EQU X Z` | Checks if the value in X IS equal to the value in Z. sets the Boolean Flag if true, clears it if false. (X == Z) |
-| 229 | Is Equal To | EQU | Y Register and Immediate | E5 | `EQU Y $val` | Checks if the value in Y IS equal to the immediate value. sets the Boolean Flag if true, clears it if false. (Y == Val) |
-| 230 | Is Equal To | EQU | Y and X Registers | E6 | `EQU Y X` | Checks if the value in Y IS equal to the value in X. sets the Boolean Flag if true, clears it if false. (Y == X) |
-| 231 | Is Equal To | EQU | Y and Z Registers | E7 | `EQU Y Z` | Checks if the value in Y IS equal to the value in Z. sets the Boolean Flag if true, clears it if false. (Y == Z) |
-| 232 | Is Equal To | EQU | Z Register and Immediate | E8 | `EQU Z $val` | Checks if the value in Z IS equal to the immediate value. sets the Boolean Flag if true, clears it if false. (Z == Val) |
-| 233 | Is Equal To | EQU | Z and X Registers | E9 | `EQU Z X` | Checks if the value in Z IS equal to the value in X. sets the Boolean Flag if true, clears it if false. (Z == X) |
-| 234 | Is Equal To | EQU | Z and Y Registers | EA | `EQU Z Y` | Checks if the value in Z IS equal to the value in Z. sets the Boolean Flag if true, clears it if false. (Z == Y) |
-| 235 | Is Not Equal | NEQ | Implied | EB | `NEQ` | Peaks at the top two values off the stack. checks if 2nd off is NOT equal to the 1st off. sets the Boolean Flag if true, clears it if false. (2nd off != 1st off) |
-| 236 | Is Not Equal | NEQ | Immediate | EC | `NEQ $val` | Peaks at the top value off the stack. checks if it is NOT equal to the immediate value. sets the Boolean Flag if true, clears it if false. (Top != Val) |
-| 237 | Is Not Equal | NEQ | X Register | ED | `NEQ X` | Peaks at the top value off the stack. checks if it is NOT equal to the value in X. sets the Boolean Flag if true, clears it if false. (Top != Val) |
-| 238 | Is Not Equal | NEQ | Y Register | EE | `NEQ Y` | Peaks at the top value off the stack. checks if it is NOT equal to the value in Y. sets the Boolean Flag if true, clears it if false. (Top != Val) |
-| 239 | Is Not Equal | NEQ | Z Register | EF | `NEQ Z` | Peaks at the top value off the stack. checks if it is NOT equal to the value in Z. sets the Boolean Flag if true, clears it if false. (Top != Val) |
-| 240 | Is Not Equal | NEQ | X Register and Immediate | F0 | `NEQ X $val` | Checks if the value in X is NOT equal to the immediate value. sets the Boolean Flag if true, clears it if false. (X != Val) |
-| 241 | Is Not Equal | NEQ | X and Y Registers | F1 | `NEQ X Y` | Checks if the value in X is NOT equal to the value in Y. sets the Boolean Flag if true, clears it if false. (X != Y) |
-| 242 | Is Not Equal | NEQ | X and Z Registers | F2 | `NEQ X Z` | Checks if the value in X is NOT equal to the value in Z. sets the Boolean Flag if true, clears it if false. (X != Z) |
-| 243 | Is Not Equal | NEQ | Y Register and Immediate | F3 | `NEQ Y $val` | Checks if the value in Y is NOT equal to the immediate value. sets the Boolean Flag if true, clears it if false. (Y != Val) |
-| 244 | Is Not Equal | NEQ | Y and X Registers | F4 | `NEQ Y X` | Checks if the value in Y is NOT equal to the value in X. sets the Boolean Flag if true, clears it if false. (Y != X) |
-| 245 | Is Not Equal | NEQ | Y and Z Registers | F5 | `NEQ Y Z` | Checks if the value in Y is NOT equal to the value in Z. sets the Boolean Flag if true, clears it if false. (Y != Z) |
-| 246 | Is Not Equal | NEQ | Z Register and Immediate | F6 | `NEQ Z $val` | Checks if the value in Z is NOT equal to the immediate value. sets the Boolean Flag if true, clears it if false. (Z != Val) |
-| 247 | Is Not Equal | NEQ | Z and X Registers | F7 | `NEQ Z X` | Checks if the value in Z is NOT equal to the value in X. sets the Boolean Flag if true, clears it if false. (Z != X) |
-| 248 | Is Not Equal | NEQ | Z and Y Registers | F8 | `NEQ Z Y` | Checks if the value in Z is NOT equal to the value in Z. sets the Boolean Flag if true, clears it if false. (Z != Y) |
-| 249 | Unused. (treated like No Op) | N/A | Implied | F9 | N/A | See No Op |
-| 250 | Unused. (treated like No Op) | N/A | Implied | FA | N/A | See No Op |
-| 251 | Unused. (treated like No Op) | N/A | Implied | FB | N/A | See No Op |
-| 252 | Unused. (treated like No Op) | N/A | Implied | FC | N/A | See No Op |
-| 253 | Unused. (treated like No Op) | N/A | Implied | FD | N/A | See No Op |
-| 254 | Unused. (treated like No Op) | N/A | Implied | FE | N/A | See No Op |
-| 255 | Unused. (treated like No Op) | N/A | Implied | FF | N/A | See No Op |
+| No OP | NOP | Implied | 00 | `NOP` | No Operation. skips current clock cycle |  |
+| Pop from Stack | POP | Implied | 01 | `POP` | Discards the value on the top of the stack |  |
+| Pop from Stack | POP | X Register | 02 | `POP X` | Pops the value on the top of the stack and stores it in X |  |
+| Pop from Stack | POP | Y Register | 03 | `POP Y` | Pops the value on the top of the stack and stores it in Y |  |
+| Push to Stack | PSH | Implied | 04 | `PSH` | Duplicates the value on the top of the stack |  |
+| Push to Stack | PSH | Immediate | 05 | `PSH $val` | Push the immediate value to the stack |  |
+| Push to Stack | PSH | X Register | 06 | `PSH X` | Push the value of X to the stack |  |
+| Push to Stack | PSH | Y Register | 07 | `PSH Y` | Push the value of Y to the stack |  |
+| Stack Swap | SWP | Implied | 08 | `SWP` | Swaps the Top two values on the stack (a b -- b a) |  |
+| Stack Over | OVR | Implied | 09 | `OVR` | Duplicates the value under the Top of the stack and pushes it to the top. (a b -- a b a) |  |
+| Stack Rotate | ROT | Implied | 0A | `ROT` | Rotates the Top 3 values on the stack. (a b c -- c a b) |  |
+| Stack Rotate | ROT | Immediate | 0B | `ROT $val` | Rotates the Top (immediate value) values on the stack. if the value is greater than the number of items on the stack, nothing is rotated and a 0 is pushed. |  |
+| Stack Rotate | ROT | X Register | 0C | `ROT X` | Rotates the Top (value in X) values on the stack. if the value is greater than the number of items on the stack, nothing is rotated and a 0 is pushed. |  |
+| Stack Rotate | ROT | Y Register | 0D | `ROT Y` | Rotates the Top (value in Y) values on the stack. if the value is greater than the number of items on the stack, nothing is rotated and a 0 is pushed. |  |
+| Clear Carry Flag | CLC | Implied | 0E | `CLC` | Clears the Carry Flag |  |
+| Clear Boolean Flag | CBL | Implied | 0F | `CBL` | Clears the Boolean Flag |  |
+| Clear Div By Zero Flag | CDZ | Implied | 10 | `CDZ` | Clears the Div By Zero Flag |  |
+| Load X | LDX | Implied | 11 | `LDX` | Pops top of the stack and stores it in X |  |
+| Load X | LDX | Immediate | 12 | `LDX $val` | Loads X with the immediate value |  |
+| Load X | LDX | Y Register | 13 | `LDX Y` | Loads X with the value in Y |  |
+| Load X | LDX | Z Register | 14 | `LDX Z` | Loads X with the value of Z |  |
+| Load Y | LDY | Implied | 15 | `LDY` | Pops top of the stack and stores it in Y |  |
+| Load Y | LDY | Immediate | 16 | `LDY $val` | Loads Y with the immediate value |  |
+| Load Y | LDY | X Register | 17 | `LDY X` | Loads Y with the value in X |  |
+| Load Y | LDY | Z Register | 18 | `LDY Z` | Loads Y with the value of Z |  |
+| Increment X | INX | Implied | 19 | `INX` | Increments the value of X |  |
+| Decrement X | DEX | Implied | 1A | `DEX` | Decrements the value of X |  |
+| Increment Y | INY | Implied | 1B | `INY` | Increments the value of Y |  |
+| Decrement Y | DEY | Implied | 1C | `DEY` | Decrements the value of Y |  |
+| Output as Number | OUT | Implied | 1D | `OUT` | Prints the top value of the stack as a number |  |
+| Output as Number | OUT | X Register | 1E | `OUT X` | Print the value of X as a number |  |
+| Output as Number | OUT | Y Register | 1F | `Out Y` | Print the value of Y as a number |  |
+| Output as Number | Out | Z Register | 20 | `Out Z` | Print the value of Z as a number |  |
+| Print as ASCII | PRT | Implied | 21 | `PRT` | Prints the top value of the stack as ASCII |  |
+| Print as ASCII | PRT | X Register | 22 | `PRT X` | Prints the value of X as ASCII |  |
+| Print as ASCII | PRT | Y Register | 23 | `PRT Y` | Prints the value of Y as ASCII |  |
+| Get Input from Console | INP | Implied | 24 | `INP` | Get input from console and push it to stack |  |
+| Unconditional Jump | JMP | Implied | 25 | `JMP` | Pops the value on top of the stack and jumps to that address |  |
+| Unconditional Jump | JMP | Immediate | 26 | `JMP $val` | Jumps to the address specified by the immediate val |  |
+| Unconditional Jump | JMP | X Register | 27 | `JMP X` | Jumps to X's value as an address |  |
+| Unconditional Jump | JMP | Y Register | 28 | `JMP Y` | Jumps to Y's value as an address |  |
+| Unconditional Long Jump | LJMP | Implied | 29 | `LJMP` | Pops the top two values of the stack and jumps to that 16bit address.LB popped first. |  |
+| Unconditional Long Jump | LJMP | Immediate (2 byte) | 2A | `LJMP $HBLB`/`LJMP $HB $LB` | Jumps to the 16bit address specified by the immediate values |  |
+| Unconditional Long Jump | LJMP | X and Y Registers | 2B | `LJMP X Y` | Jumps to X and Y's values as a single 16bit address.X is HB Y is LB |  |
+| Jump If Carry | JFC | Implied | 2C | `JFC` | If the Carry Flag IS set,Pops the top two values of the stack and jumps to that 16bit address.LB popped first. |  |
+| Jump If Carry | JFC | Immediate | 2D | `JFC $val` | If the Carry Flag IS set,Jumps to the address specified by the immediate value |  |
+| Jump If Carry | JFC | X Register | 2E | `JFC X` | If the Carry Flag IS set,Jumps to X's value as an address |  |
+| Jump If Carry | JFC | Y Register | 2F | `JFC Y` | If the Carry Flag IS set,Jumps to Y's value as an address |  |
+| Long Jump If Carry | LJFC | Implied | 30 | `LJFC` | Pops the top two values of the stack and jumps to that 16bit address.LB popped first. |  |
+| Long Jump If Carry | LJFC | Immediate (2 byte) | 31 | `LJFC $HBLB`/`LJFC $HB $LB` | Jumps to the 16bit address specified by the immediate values |  |
+| Long Jump If Carry | LJFC | X and Y Registers | 32 | `LJFC X Y` | Jumps to X and Y's values as a single 16bit address.X is HB Y is LB |  |
+| Jump If True | JIF | Implied | 33 | `JIF` | If the Boolean Flag IS set,Pops the value on top of the stack and jumps to that address |  |
+| Jump If True | JIF | Immediate | 34 | `JIF $val` | If the Boolean Flag IS set,Jumps to the address specified by the immediate val |  |
+| Jump If True | JIF | X Register | 35 | `JIF X` | If the Boolean Flag IS set,Jumps to X's value as an address |  |
+| Jump If True | JIF | Y Register | 36 | `JIF Y` | If the Boolean Flag IS set,Jumps to Y's value as an address |  |
+| Long Jump If True | LJIF | Implied | 37 | `LJIF` | If the Boolean Flag IS set,Pops the top two values of the stack and jumps to that 16bit address.LB popped first. |  |
+| Long Jump If True | LJIF | Immediate (2 byte) | 38 | `LJIF $HBLB`/`LJIF $HB $LB` | If the Boolean Flag IS set,Jumps to the 16bit address specified by the immediate vals |  |
+| Long Jump If True | LJIF | X and Y Registers | 39 | `LJIF X Y` | If the Boolean Flag IS set, Jumps to X and Y's values as a single 16bit address. X is HB Y is LB |  |
+| Jump If Div by Zero | JDZ | Implied | 3A | `JDZ` | If the Div by Zero Flag IS set,Pops the value on top of the stack and jumps to that address |  |
+| Jump If Div by Zero | JDZ | Immediate | 3B | `JDZ $val` | If the Div by Zero Flag IS set,Jumps to the address specified by the immediate val |  |
+| Jump If Div by Zero | JDZ | X Register | 3C | `JDZ X` | If the Div by Zero Flag IS set,Jumps to X's value as an address |  |
+| Jump If Div by Zero | JDZ | Y Register | 3D | `JDZ Y` | If the Div by Zero Flag IS set,Jumps to Y's value as an address |  |
+| Long Jump If Div by Zero | LJDZ | Implied | 3E | `LJDZ` | If the Div by Zero Flag IS set,Pops the top two values of the stack and jumps to that 16bit address.LB popped first. |  |
+| Long Jump If Div by Zero | LJDZ | Immediate (2 byte) | 3F | `LJDZ $HBLB`/`LJDZ $HB $LB` | If the Div by Zero Flag IS set,Jumps to the 16bit address specified by the immediate vals |  |
+| Long Jump If Div by Zero | LJDZ | X and Y Registers | 40 | `LJDZ X Y` | If the Div by Zero Flag IS set, Jumps to X and Y's values as a single 16bit address. X is HB Y is LB |  |
+| Add<sup>1</sup> | ADD | Implied | 41 | `ADD` | Pops top two values off the stack stack, pushes their sum (2nd off + 1st off) |  |
+| Add<sup>1</sup> | ADD | Immediate | 42 | `ADD $val` | Pops top value off the stack, sums it and immediate val, pushes result (Top + Val) |  |
+| Add<sup>1</sup> | ADD | Immediate (2 byte) | 43 | `ADD $A $B` | Pushes the sum of two immediate values (A + B) |  |
+| Add<sup>1</sup> | ADD | X Register | 44 | `ADD X` | Pops top value off the stack, sums it and X, pushes result (Top + X) |  |
+| Add<sup>1</sup> | ADD | Y Register | 45 | `ADD Y` | Pops top value off the stack, sums it and Y, pushes result (Top + Y) |  |
+| Add<sup>1</sup> | ADD | X and Y Registers | 46 | `ADD X Y` | Pushes the sum of X and Y (X + Y) |  |
+| Subtract<sup>1</sup> | SUB | Implied | 47 | `SUB` | Pops top two values off the stack, pushes their difference. (2nd off - 1st off) |  |
+| Subtract<sup>1</sup> | SUB | Immediate | 48 | `SUB $val` | Pops top value off the stack, subtracts immediate value from it, pushes result (Top - Val) |  |
+| Subtract<sup>1</sup> | SUB | Immediate (2 byte) | 49 | `SUB $A $B` | Pushes the difference of two immediate values (A - B) |  |
+| Subtract<sup>1</sup> | SUB | X Register | 4A | `SUB X` | Pops top value off the stack, subtracts X from it, pushes result (Top - X) |  |
+| Subtract<sup>1</sup> | SUB | Y Register | 4B | `SUB Y` | Pops top value off the stack, subtracts Y from it, pushes result (Top - Y) |  |
+| Subtract<sup>1</sup> | SUB | X and Y Registers | 4C | `SUB X Y` | Pushes the difference of X and Y (X - Y) |  |
+| Multiply<sup>1</sup> | MUL | Implied | 4D | `MUL` | Pops top two values off the stack, pushes their product (2nd off * 1st off) |  |
+| Multiply<sup>1</sup> | MUL | Immediate | 4E | `MUL $val` | Pops top value off the stack, multiplies it by the immediate val, pushes result (Top * Val) |  |
+| Multiply<sup>1</sup> | MUL | Immediate (2 byte) | 4F | `MUL $A $B` | Pushes the product of two immediate values (A * B) |  |
+| Multiply<sup>1</sup> | MUL | X Register | 50 | `MUL X` | Pops top value off the stack, multiplies it by X, pushes result (Top * X) |  |
+| Multiply<sup>1</sup> | MUL | Y Register | 51 | `MUL Y` | Pops top value off the stack, multiplies it by Y, pushes result (Top * Y) |  |
+| Multiply<sup>1</sup> | MUL | X and Y Registers | 52 | `MUL X Y` | Pushes the product of X and Y (X * Y) |  |
+| Divide<sup>2</sup> | DIV | Implied | 53 | `DIV` | Pops top two values off the stack, pushes their quotient. then remainder (2nd off / 1st off) |  |
+| Divide<sup>2</sup> | DIV | Immediate | 54 | `DIV $val` | Pops top value off the stack, divides it by the immediate val, pushes quotient then remainder. (Top / Val) |  |
+| Divide<sup>2</sup> | DIV | Immediate (2 byte) | 55 | `DIV $A $B` | Pushes the quotient, then remainder, of two immediate values. (A / B) |  |
+| Divide<sup>2</sup> | DIV | X Register | 56 | `DIV X` | Pops top value off the stack, divides it by X, pushes the quotient, then remainder. (Top / X) |  |
+| Divide<sup>2</sup> | DIV | Y Register | 57 | `DIV Y` | Pops top value off the stack, divides it by Y, then pushes the quotient, then remainder. (Top / Y) |  |
+| Divide<sup>2</sup> | DIV | X and Y Registers | 58 | `DIV X Y` | Pushes the quotient, then remainder, of X and Y. (X / Y) |  |
+| Bitwise Rotate Left | RTL | Implied | 59 | `RTL` | Pops top value off the stack, rotates all bits to the left once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |  |
+| Bitwise Rotate Left | RTL | Immediate | 5A | `RTL $val` | rotates all bits of immediate value to the left once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |  |
+| Bitwise Rotate Left | RTL | X Register | 5B | `RTL X` | rotates all bits of X to the left once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |  |
+| Bitwise Rotate Left | RTL | Y Register | 5C | `RTL Y` | rotates all bits of Y to the left once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |  |
+| Bitwise Rotate Right | RTR | Implied | 5D | `RTR` | Pops top value off the stack, rotates all bits to the right once. pushes result. (Least significant bit wrapping around to most significant bit) (0001 -> 1000) |  |
+| Bitwise Rotate Right | RTR | Immediate | 5E | `RTR $val` | rotates all bits of immediate value to the right once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |  |
+| Bitwise Rotate Right | RTR | X Register | 5F | `RTR X` | rotates all bits of X to the right once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |  |
+| Bitwise Rotate Right | RTR | Y Register | 60 | `RTR Y` | rotates all bits of Y to the right once. pushes result. (Most significant bit wrapping around to least significant bit) (0001 -> 1000) |  |
+| Bitwise Shift Left | SHL | Implied | 61 | `SHL` | Pops top value off the stack, shifts all bits to the left once. pushes result. (vacent bits padded with zeros) (1001 -> 0010) |  |
+| Bitwise Shift Left | SHL | Immediate | 62 | `SHL $val` | Shifts all bits of immediate value to the left once. pushes result. (vacent bits padded with zeros) (1001 -> 0010) |  |
+| Bitwise Shift Left | SHL | X Register | 63 | `SHL X` | Shifts all bits of X to the left once. pushes result. (vacent bits padded with zeros) (1001 -> 0010) |  |
+| Bitwise Shift Left | SHL | Y Register | 64 | `SHL Y` | Shifts all bits of Y to the left once. pushes result. (vacent bits padded with zeros) (1001 -> 0010) |  |
+| Bitwise Shift Right | SHR | Implied | 65 | `SHR` | Pops top value off the stack, shifts all bits to the right once. pushes result. (vacent bits padded with zeros) (1001 -> 0100) |  |
+| Bitwise Shift Right | SHR | Immediate | 66 | `SHR $val` | Shifts all bits of immediate value to the right once. pushes result. (vacent bits padded with zeros) (1001 -> 0100) |  |
+| Bitwise Shift Right | SHR | X Register | 67 | `SHR X` | Shifts all bits of X to the right once. pushes result. (vacent bits padded with zeros) (1001 -> 0100) |  |
+| Bitwise Shift Right | SHR | Y Register | 68 | `SHR Y` | Shifts all bits of Y to the right once. pushes result. (vacent bits padded with zeros) (1001 -> 0100) |  |
+| Bitwise And | AND | Implied | 69 | `AND` | Pops the top two values off the stack, preforms bitwise/binary and on them (2nd off & 1st off), pushes result |  |
+| Bitwise And | AND | Immediate | 6A | `AND $val` | Pops top value off the stack, preforms bitwise/binary and on it and the immediate value (Top & Val), pushes result |  |
+| Bitwise And | AND | Immediate (2 byte) | 6B | `AND $A $B` | Pushes the bitwise/binary and of the two immediate values (A & B) |  |
+| Bitwise And | AND | X Register | 6C | `AND X` | Pops top value off the stack, preforms bitwise/binary and on it and X (Top & X), pushes result |  |
+| Bitwise And | AND | Y Register | 6D | `AND Y` | Pops top value off the stack, preforms bitwise/binary and on it and Y (Top & Y), pushes result |  |
+| Bitwise And | AND | X and Y Registers | 6E | `AND X Y` | Pushes the bitwise/binary and of X and Y (X & Y) |  |
+| Bitwise Or | OR | Implied | 6F | `OR` | Pops the top two values off the stack, preforms bitwise/binary or on them (2nd off \| 1st off), pushes result |  |
+| Bitwise Or | OR | Immediate | 70 | `OR $val` | Pops top value off the stack, preforms bitwise/binary or on it and the immediate value (Top \| Val), pushes result |  |
+| Bitwise Or | OR | Immediate (2 byte) | 71 | `OR $A $B` | Pushes the bitwise/binary or of the two immediate values (A \| B) |  |
+| Bitwise Or | OR | X Register | 72 | `OR X` | Pops top value off the stack, preforms bitwise/binary or on it and X (Top \| X), pushes result |  |
+| Bitwise Or | OR | Y Register | 73 | `OR Y` | Pops top value off the stack, preforms bitwise/binary or on it and Y (Top \| Y), pushes result |  |
+| Bitwise Or | OR | X and Y Registers | 74 | `OR X Y` | Pushes the bitwise/binary or of X and Y (X \| Y) |  |
+| Bitwise Xor | XOR | Implied | 75 | `XOR` | Pops the top two values off the stack, preforms bitwise/binary xor on them (2nd off \^ 1st off), pushes result |  |
+| Bitwise Xor | XOR | Immediate | 76 | `XOR $val` | Pops top value off the stack, preforms bitwise/binary xor on it and the immediate value (Top \^ Val), pushes result |  |
+| Bitwise Xor | XOR | Immediate (2 byte) | 77 | `XOR $A $B` | Pushes the bitwise/binary xor of the two immediate values (A \^ B) |  |
+| Bitwise Xor | XOR | X Register | 78 | `XOR X` | Pops top value off the stack, preforms bitwise/binary xor on it and X (Top \^ X), pushes result |  |
+| Bitwise Xor | XOR | Y Register | 79 | `XOR Y` | Pops top value off the stack, preforms bitwise/binary xor on it and Y (Top \^ Y), pushes result |  |
+| Bitwise Xor | XOR | X and Y Registers | 7A | `XOR X Y` | Pushes the bitwise/binary xor of X and Y (X \^ Y) |  |
+| Not/Invert/Complement | NOT | Implied | 7B | `NOT` | Pops the top value off the stack,  inverts each bit (~Top ei 1001 > 0110), pushes result |  |
+| Not/Invert/Complement | NOT | Immediate | 7C | `NOT $val` | Inverts each bit of immediate value (~Val ei 1001 > 0110), pushes result |  |
+| Not/Invert/Complement | NOT | X Register | 7D | `NOT X` | Inverts each bit of X (~X ei 1001 > 0110), pushes result |  |
+| Not/Invert/Complement | NOT | Y Register | 7E | `NOT Y` | Inverts each bit of Y (~Y ei 1001 > 0110), pushes result |  |
+| Is Less Than | LTH | Implied | 7F | `LTH` | Peaks at the top two values off the stack. checks if 2nd off is less than the 1st off. sets the Boolean Flag if true, clears it if false. (2nd off < 1st off) |  |
+| Is Less Than | LTH | Immediate | 80 | `LTH $val` | Peaks at the top value off the stack. checks if it is less than the immediate value. sets the Boolean Flag if true, clears it if false. (Top < Val) |  |
+| Is Less Than | LTH | X Register | 81 | `LTH X` | Peaks at the top value off the stack. checks if it is less than the value in X. sets the Boolean Flag if true, clears it if false. (Top < Val) |  |
+| Is Less Than | LTH | Y Register | 82 | `LTH Y` | Peaks at the top value off the stack. checks if it is less than the value in Y. sets the Boolean Flag if true, clears it if false. (Top < Val) |  |
+| Is Less Than | LTH | Z Register | 83 | `LTH Z` | Peaks at the top value off the stack. checks if it is less than the value in Z. sets the Boolean Flag if true, clears it if false. (Top < Val) |  |
+| Is Less Than | LTH | X Register and Immediate | 84 | `LTH X $val` | Checks if the value in X is less than the immediate value. sets the Boolean Flag if true, clears it if false. (X < Val) |  |
+| Is Less Than | LTH | X and Y Registers | 85 | `LTH X Y` | Checks if the value in X is less than the value in Y. sets the Boolean Flag if true, clears it if false. (X < Y) |  |
+| Is Less Than | LTH | X and Z Registers | 86 | `LTH X Z` | Checks if the value in X is less than the value in Z. sets the Boolean Flag if true, clears it if false. (X < Z) |  |
+| Is Less Than | LTH | Y Register and Immediate | 87 | `LTH Y $val` | Checks if the value in Y is less than the immediate value. sets the Boolean Flag if true, clears it if false. (Y < Val) |  |
+| Is Less Than | LTH | Y and X Registers | 88 | `LTH Y X` | Checks if the value in Y is less than the value in X. sets the Boolean Flag if true, clears it if false. (Y < X) |  |
+| Is Less Than | LTH | Y and Z Registers | 89 | `LTH Y Z` | Checks if the value in Y is less than the value in Z. sets the Boolean Flag if true, clears it if false. (Y < Z) |  |
+| Is Less Than | LTH | Z Register and Immediate | 8A | `LTH Z $val` | Checks if the value in Z is less than the immediate value. sets the Boolean Flag if true, clears it if false. (Z < Val) |  |
+| Is Less Than | LTH | Z and X Registers | 8B | `LTH Z X` | Checks if the value in Z is less than the value in X. sets the Boolean Flag if true, clears it if false. (Z < X) |  |
+| Is Less Than | LTH | Z and Y Registers | 8C | `LTH Z Y` | Checks if the value in Z is less than the value in Z. sets the Boolean Flag if true, clears it if false. (Z < Y) |  |
+| Is Greater Than | GTH | Implied | 8D | `GTH` | Peaks at the top two values off the stack. checks if 2nd off is greater than the 1st off. sets the Boolean Flag if true, clears it if false. (2nd off > 1st off) |  |
+| Is Greater Than | GTH | Immediate | 8E | `GTH $val` | Peaks at the top value off the stack. checks if it is greater than the immediate value. sets the Boolean Flag if true, clears it if false. (Top > Val) |  |
+| Is Greater Than | GTH | X Register | 8F | `GTH X` | Peaks at the top value off the stack. checks if it is greater than the value in X. sets the Boolean Flag if true, clears it if false. (Top > Val) |  |
+| Is Greater Than | GTH | Y Register | 90 | `GTH Y` | Peaks at the top value off the stack. checks if it is greater than the value in Y. sets the Boolean Flag if true, clears it if false. (Top > Val) |  |
+| Is Greater Than | GTH | Z Register | 91 | `GTH Z` | Peaks at the top value off the stack. checks if it is greater than the value in Z. sets the Boolean Flag if true, clears it if false. (Top > Val) |  |
+| Is Greater Than | GTH | X Register and Immediate | 92 | `GTH X $val` | Checks if the value in X is greater than the immediate value. sets the Boolean Flag if true, clears it if false. (X > Val) |  |
+| Is Greater Than | GTH | X and Y Registers | 93 | `GTH X Y` | Checks if the value in X is greater than the value in Y. sets the Boolean Flag if true, clears it if false. (X > Y) |  |
+| Is Greater Than | GTH | X and Z Registers | 94 | `GTH X Z` | Checks if the value in X is greater than the value in Z. sets the Boolean Flag if true, clears it if false. (X > Z) |  |
+| Is Greater Than | GTH | Y Register and Immediate | 95 | `GTH Y $val` | Checks if the value in Y is greater than the immediate value. sets the Boolean Flag if true, clears it if false. (Y > Val) |  |
+| Is Greater Than | GTH | Y and X Registers | 96 | `GTH Y X` | Checks if the value in Y is greater than the value in X. sets the Boolean Flag if true, clears it if false. (Y > X) |  |
+| Is Greater Than | GTH | Y and Z Registers | 97 | `GTH Y Z` | Checks if the value in Y is greater than the value in Z. sets the Boolean Flag if true, clears it if false. (Y > Z) |  |
+| Is Greater Than | GTH | Z Register and Immediate | 98 | `GTH Z $val` | Checks if the value in Z is greater than the immediate value. sets the Boolean Flag if true, clears it if false. (Z > Val) |  |
+| Is Greater Than | GTH | Z and X Registers | 99 | `GTH Z X` | Checks if the value in Z is greater than the value in X. sets the Boolean Flag if true, clears it if false. (Z > X) |  |
+| Is Greater Than | GTH | Z and Y Registers | 9A | `GTH Z Y` | Checks if the value in Z is greater than the value in Z. sets the Boolean Flag if true, clears it if false. (Z > Y) |  |
+| Is Equal To | EQU | Implied | 9B | `EQU` | Peaks at the top two values off the stack. checks if 2nd off IS equal to the 1st off. sets the Boolean Flag if true, clears it if false. (2nd off == 1st off) |  |
+| Is Equal To | EQU | Immediate | 9C | `EQU $val` | Peaks at the top value off the stack. checks if it IS equal to the immediate value. sets the Boolean Flag if true, clears it if false. (Top == Val) |  |
+| Is Equal To | EQU | X Register | 9D | `EQU X` | Peaks at the top value off the stack. checks if it IS equal to the value in X. sets the Boolean Flag if true, clears it if false. (Top == Val) |  |
+| Is Equal To | EQU | Y Register | 9E | `EQU Y` | Peaks at the top value off the stack. checks if it IS equal to the value in Y. sets the Boolean Flag if true, clears it if false. (Top == Val) |  |
+| Is Equal To | EQU | Z Register | 9F | `EQU Z` | Peaks at the top value off the stack. checks if it IS equal to the value in Z. sets the Boolean Flag if true, clears it if false. (Top == Val) |  |
+| Is Equal To | EQU | X Register and Immediate | A0 | `EQU X $val` | Checks if the value in X IS equal to the immediate value. sets the Boolean Flag if true, clears it if false. (X == Val) |  |
+| Is Equal To | EQU | X and Y Registers | A1 | `EQU X Y` | Checks if the value in X IS equal to the value in Y. sets the Boolean Flag if true, clears it if false. (X == Y) |  |
+| Is Equal To | EQU | X and Z Registers | A2 | `EQU X Z` | Checks if the value in X IS equal to the value in Z. sets the Boolean Flag if true, clears it if false. (X == Z) |  |
+| Is Equal To | EQU | Y Register and Immediate | A3 | `EQU Y $val` | Checks if the value in Y IS equal to the immediate value. sets the Boolean Flag if true, clears it if false. (Y == Val) |  |
+| Is Equal To | EQU | Y and X Registers | A4 | `EQU Y X` | Checks if the value in Y IS equal to the value in X. sets the Boolean Flag if true, clears it if false. (Y == X) |  |
+| Is Equal To | EQU | Y and Z Registers | A5 | `EQU Y Z` | Checks if the value in Y IS equal to the value in Z. sets the Boolean Flag if true, clears it if false. (Y == Z) |  |
+| Is Equal To | EQU | Z Register and Immediate | A6 | `EQU Z $val` | Checks if the value in Z IS equal to the immediate value. sets the Boolean Flag if true, clears it if false. (Z == Val) |  |
+| Is Equal To | EQU | Z and X Registers | A7 | `EQU Z X` | Checks if the value in Z IS equal to the value in X. sets the Boolean Flag if true, clears it if false. (Z == X) |  |
+| Is Equal To | EQU | Z and Y Registers | A8 | `EQU Z Y` | Checks if the value in Z IS equal to the value in Z. sets the Boolean Flag if true, clears it if false. (Z == Y) |  |
 
 
 
