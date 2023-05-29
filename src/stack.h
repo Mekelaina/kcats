@@ -26,6 +26,14 @@ uint8_t peak(Stack *s);
 // pop and discard the top value on the stack
 void drop(Stack *s);
 
+void swap(Stack *s);
+
+void over(Stack *s);
+
+void rotate(Stack *s);
+
+void rotateNumberOfItems(Stack *s, uint16_t count);
+
 // print out the whole stack for debugging
 void dump(Stack *s);
 
