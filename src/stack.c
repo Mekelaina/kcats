@@ -49,6 +49,74 @@ void drop(Stack *s){
     s->data[s->top] = 0;
 }
 
+//Swaps the top two values on the stack. otherwise does nothing.
+// (a b -- b a)
+void swap(Stack *s){
+    if(s->count < 2){
+        return;
+    }
+
+    uint8_t a, b;
+    a = s->data[s->top+2];
+    b = s->data[s->top+1];
+    s->data[s->top+2] = b;
+    s->data[s->top+1] = a;
+}
+
+//Copys the value under top and pushes it.
+//(a b -- a b a)
+void over(Stack *s){
+    if(s->count < 2){
+        return;
+    }
+    push(s, s->data[s->top+2]);
+}
+
+//(a b c -- c a b)
+void rotate(Stack *s){
+    if(s->count < 3){
+        return;
+    }
+    uint8_t a = s->data[s->top+3];
+    uint8_t b = s->data[s->top+2];
+    uint8_t c = s->data[s->top+1];
+    s->data[s->top+3] = c;
+    s->data[s->top+2] = a;
+    s->data[s->top+1] = b;
+}
+
+
+//rotate an arbtrary number of values. 
+//this code is much slower bc it has to
+//copy the specified section of the stack twice
+//should look into optimizing it at some point.
+void rotateNumberOfItems(Stack *s, uint16_t count){
+    if(count > s->count){
+        push(s, 0);
+        return;
+    }
+    uint8_t buffer[count];
+    
+    for(int i = 0; i < count; ++i){
+        buffer[i] = s->data[s->top+(count-i)];
+    }  
+    
+    uint8_t back = s->data[s->top+1];
+
+    for(int i = 1; i < count; ++i){
+        s->data[s->top+(count-i)] = buffer[i-1];
+    }
+    s->data[s->top+count] = back;
+}
+
+
+void push_ints(Stack *s, uint8_t values[], uint16_t count){
+    for (int i = 0; i < count; ++i){
+        push(s, values[i]);
+    }
+}
+
+
 // print out the whole stack for debugging
 void dump(Stack *s){
     printf("DEBUG:\n       -----  Stack Dump  -----\n");
@@ -65,30 +133,4 @@ void dump(Stack *s){
         c++;
     }
     printf("\n");
-}
-
-//Swaps the top two values on the stack. otherwise does nothing.
-// (a b -- b a)
-void swap(Stack *s){
-    if(s->count < 2){
-        return;
-    }
-
-    uint8_t a, b;
-    a = s->data[s->top+2];
-    b = s->data[s->top+1];
-    s->data[s->top+2] = b;
-    s->data[s->top+1] = a;
-}
-
-void over(Stack *s){
-
-}
-
-void rotate(Stack *s){
-
-}
-
-void rotateNumberOfItems(Stack *s, uint16_t count){
-
 }
