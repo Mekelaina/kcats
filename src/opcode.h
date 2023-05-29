@@ -311,8 +311,6 @@
 typedef enum Opcode {
     NOP,
     POP,
-    POP_X,
-    POP_Y,
     PUSH,
     PUSH_IM,
     PUSH_X,

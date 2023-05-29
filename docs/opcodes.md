@@ -6,8 +6,6 @@
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | No OP | NOP | Implied | 00 | `NOP` | No Operation. skips current clock cycle |  |
 | Pop from Stack | POP | Implied | 01 | `POP` | Discards the value on the top of the stack |  |
-| Pop from Stack | POP | X Register | 02 | `POP X` | Pops the value on the top of the stack and stores it in X |  |
-| Pop from Stack | POP | Y Register | 03 | `POP Y` | Pops the value on the top of the stack and stores it in Y |  |
 | Push to Stack | PSH | Implied | 04 | `PSH` | Duplicates the value on the top of the stack |  |
 | Push to Stack | PSH | Immediate | 05 | `PSH $val` | Push the immediate value to the stack |  |
 | Push to Stack | PSH | X Register | 06 | `PSH X` | Push the value of X to the stack |  |
