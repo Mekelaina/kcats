@@ -7,11 +7,11 @@
 
 typedef struct flags{
     unsigned C : 1; // carry flag
-    unsigned Z : 1; // zero flag
     unsigned B : 1; // boolean flag
     unsigned D : 1; // divide by zero flag
-    unsigned R : 1; // remainder flag (unsigned integer subtraction and division)
     unsigned H : 1; // Halting flag
+ // unsigned Z : 1; // zero flag
+ // unsigned R : 1; // remainder flag (unsigned integer subtraction and division)
 } Flags;
 
 typedef struct machine{

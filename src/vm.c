@@ -27,11 +27,6 @@ static void execute(VM *vm){
         case HALT: {
             vm->flags.H = 1;
         } break;
-        case HALT_W_EXITCODE: {
-            a = fetchArg(vm);
-            vm->flags.H = 1;
-            printf("%d\n", a);
-        } break;
         case LOAD_X: {
             vm->REG_X = pop(&(vm->stack));
         } break;
@@ -50,7 +45,7 @@ static void execute(VM *vm){
         case PUSH_X: {
             push(&(vm->stack), vm->REG_X);
         } break;
-        case OUT: {
+        case NUM_OUT: {
             printf("%d\n", pop(&(vm->stack)));
         } break;
         default: {
@@ -62,10 +57,10 @@ static void execute(VM *vm){
 void init_vm(VM *vm, uint8_t *program, uint16_t programSize){
     init_stack(&(vm->stack));
     vm->flags.C = 0;
-    vm->flags.Z = 0;
+    //vm->flags.Z = 0;
     vm->flags.B = 0;
     vm->flags.D = 0;
-    vm->flags.R = 0;
+    //vm->flags.R = 0;
     vm->flags.H = 0;
 
     vm->REG_X = 0;

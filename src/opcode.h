@@ -309,7 +309,7 @@
  */
 
 typedef enum Opcode {
-    NOP,
+    NO_OP,
     POP,
     PUSH,
     PUSH_IM,
@@ -478,7 +478,7 @@ typedef enum Opcode {
     IS_EQ_Z_Y,
 
 
-
+    HALT = 255
 
 
 
