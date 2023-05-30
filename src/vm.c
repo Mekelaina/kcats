@@ -61,10 +61,12 @@ static void execute(VM *vm){
             pop(&(vm->stack));
         } break;
         case PUSH: {
-            push(&(vm->stack), peak(&(vm->stack)));
+            uint8_t a = peak(&(vm->stack));
+            push(&(vm->stack), a);
         } break;
         case PUSH_IM: { 
-            push(&(vm->stack), fetchArg(vm));
+            uint8_t a = fetchArg(vm);
+            push(&(vm->stack), a);
         } break;
         case PUSH_X: {
             push(&(vm->stack), vm->REG_X);
@@ -82,7 +84,7 @@ static void execute(VM *vm){
             rotate(&(vm->stack));
         } break;
         case ROT_IM: {
-            rotateNumberOfItems(&(vm->stack), (uint16_t)fetchArg(&vm));
+            rotateNumberOfItems(&(vm->stack), (uint16_t)fetchArg(vm));
         } break;
         case ROT_X: {
             rotateNumberOfItems(&(vm->stack), vm->REG_X);
@@ -104,10 +106,12 @@ static void execute(VM *vm){
 
         // register ops
         case LOAD_X: {
-            vm->REG_X = pop(&(vm->stack));
+            uint8_t a = pop(&(vm->stack));
+            vm->REG_X = a;
         } break;
         case LOAD_X_IM: {
-            vm->REG_X = fetchArg(&vm);
+            uint8_t a = fetchArg(vm);
+            vm->REG_X = a;
         } break;
         case LOAD_X_Y: {
             vm->REG_X = vm->REG_Y;
@@ -119,7 +123,7 @@ static void execute(VM *vm){
             vm->REG_Y = pop(&(vm->stack));
         } break;
         case LOAD_Y_IM: {
-            vm->REG_Y = fetchArg(&vm);
+            vm->REG_Y = fetchArg(vm);
         } break;
         case LOAD_Y_X: {
             vm->REG_Y = vm->REG_X;
@@ -129,28 +133,24 @@ static void execute(VM *vm){
         } break;
         case INC_X: {
             vm->REG_X++;
-
             if(vm->REG_X == 0){
                 vm->flags.C = 1;
             }
         } break;
         case DEC_X: {
             vm->REG_X--;
-
             if(vm->REG_X == 255){
                 vm->flags.C = 1;
             }
         }
         case INC_Y: {
             vm->REG_Y++;
-
             if(vm->REG_Y == 0){
                 vm->flags.C = 1;
             }
         } break;
         case DEC_Y: {
             vm->REG_Y--;
-
             if(vm->REG_Y == 255){
                 vm->flags.C = 1;
             }
@@ -189,7 +189,7 @@ static void execute(VM *vm){
             vm->PC = (uint16_t) pop(&(vm->stack));
         } break;
         case JUMP_IM: {
-            vm->PC = (uint16_t) fetchArg(&vm);
+            vm->PC = (uint16_t) fetchArg(vm);
         } break;
         case JUMP_X: {
             vm->PC = (uint16_t) vm->REG_X;
@@ -208,8 +208,8 @@ static void execute(VM *vm){
         case LJUMP_IM: {
             uint8_t low, high;
             uint16_t addr;
-            high = fetchArg(&vm);
-            low  = fetchArg(&vm);
+            high = fetchArg(vm);
+            low  = fetchArg(vm);
             addr = (high << 8) | low;
             vm->PC = addr;
         } break;
@@ -223,7 +223,7 @@ static void execute(VM *vm){
         } break;
         case JUMP_CARRY_IM: {
             if(vm->flags.C){
-                vm->PC = (uint16_t) fetchArg(&vm);
+                vm->PC = (uint16_t) fetchArg(vm);
             }
         } break;
         case JUMP_CARRY_X: {
@@ -250,8 +250,8 @@ static void execute(VM *vm){
             if(vm->flags.C){
                 uint8_t low, high;
                 uint16_t addr;
-                high = fetchArg(&vm);
-                low  = fetchArg(&vm);
+                high = fetchArg(vm);
+                low  = fetchArg(vm);
                 addr = (high << 8) | low;
                 vm->PC = addr;
             }
@@ -268,7 +268,7 @@ static void execute(VM *vm){
         } break;
         case JUMP_TRUE_IM: {
             if(vm->flags.D){
-                vm->PC = (uint16_t) fetchArg(&vm);
+                vm->PC = (uint16_t) fetchArg(vm);
             }
         } break;
         case JUMP_TRUE_X: {
@@ -295,8 +295,8 @@ static void execute(VM *vm){
             if(vm->flags.D){
                 uint8_t low, high;
                 uint16_t addr;
-                high = fetchArg(&vm);
-                low  = fetchArg(&vm);
+                high = fetchArg(vm);
+                low  = fetchArg(vm);
                 addr = (high << 8) | low;
                 vm->PC = addr;
             }
@@ -313,7 +313,7 @@ static void execute(VM *vm){
         } break;
         case JUMP_DBZ_IM: {
             if(vm->flags.D){
-                vm->PC = (uint16_t) fetchArg(&vm);
+                vm->PC = (uint16_t) fetchArg(vm);
             }
         } break;
         case JUMP_DBZ_X: {
@@ -340,8 +340,8 @@ static void execute(VM *vm){
             if(vm->flags.D){
                 uint8_t low, high;
                 uint16_t addr;
-                high = fetchArg(&vm);
-                low  = fetchArg(&vm);
+                high = fetchArg(vm);
+                low  = fetchArg(vm);
                 addr = (high << 8) | low;
                 vm->PC = addr;
             }
@@ -365,7 +365,7 @@ static void execute(VM *vm){
         case ADD_IM: {
             uint8_t a, b;
             b = pop(&(vm->stack));
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(checkForOverflow_Add(b, a) == 1){
                 vm->flags.C = 1;
             }
@@ -373,8 +373,8 @@ static void execute(VM *vm){
         } break;
         case ADD_IM_L: {
             uint8_t a, b;
-            b = fetchArg(&vm);
-            a = fetchArg(&vm);
+            b = fetchArg(vm);
+            a = fetchArg(vm);
             if(checkForOverflow_Add(b, a) == 1){
                 vm->flags.C = 1;
             }
@@ -414,7 +414,7 @@ static void execute(VM *vm){
         case SUBTRACT_IM: {
             uint8_t a, b;
             b = pop(&(vm->stack));
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(checkForOverflow_Subtract(b, a) == 1){
                 vm->flags.C = 1;
             }
@@ -422,8 +422,8 @@ static void execute(VM *vm){
         } break;
         case SUBTRACT_IM_L: {
             uint8_t a, b;
-            b = fetchArg(&vm);
-            a = fetchArg(&vm);
+            b = fetchArg(vm);
+            a = fetchArg(vm);
             if(checkForOverflow_Add(b, a) == 1){
                 vm->flags.C = 1;
             }
@@ -463,7 +463,7 @@ static void execute(VM *vm){
         case MULTIPLY_IM: {
             uint8_t a, b;
             b = pop(&(vm->stack));
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(checkForOverflow_Multiply(b, a) == 1){
                 vm->flags.C = 1;
             }
@@ -471,8 +471,8 @@ static void execute(VM *vm){
         } break;
         case MULTIPLY_IM_L: {
             uint8_t a, b;
-            b = fetchArg(&vm);
-            a = fetchArg(&vm);
+            b = fetchArg(vm);
+            a = fetchArg(vm);
             if(checkForOverflow_Multiply(b, a) == 1){
                 vm->flags.C = 1;
             }
@@ -516,7 +516,7 @@ static void execute(VM *vm){
         case DIVIDE_IM: {
             uint8_t a, b;
             a = pop(&(vm->stack));
-            b = fetchArg(&vm);
+            b = fetchArg(vm);
             if(b == 0){
                 vm->flags.D = 1;
                 push(&(vm->stack), a);
@@ -527,8 +527,8 @@ static void execute(VM *vm){
         } break;
         case DIVIDE_IM_L: {
             uint8_t a, b;
-            a = fetchArg(&vm);
-            b = fetchArg(&vm);
+            a = fetchArg(vm);
+            b = fetchArg(vm);
             if(b == 0){
                 vm->flags.D = 1;
             } else {
@@ -573,7 +573,7 @@ static void execute(VM *vm){
             push(&(vm->stack), bitRotate(a, 1));
         } break;
         case BIT_ROT_LEFT_IM: {
-            uint8_t a = fetchArg(&vm);
+            uint8_t a = fetchArg(vm);
             push(&(vm->stack), bitRotate(a, 1));
         } break;
         case BIT_ROT_LEFT_X: {
@@ -587,7 +587,7 @@ static void execute(VM *vm){
             push(&(vm->stack), bitRotate(a, -1));
         } break;
         case BIT_ROT_RIGHT_IM: {
-            uint8_t a = fetchArg(&vm);
+            uint8_t a = fetchArg(vm);
             push(&(vm->stack), bitRotate(a, -1));
         } break;
         case BIT_ROT_RIGHT_X: {
@@ -601,7 +601,7 @@ static void execute(VM *vm){
             push(&(vm->stack), (a << 1));
         } break;
         case BIT_SHIFT_LEFT_IM: {
-            uint8_t a = fetchArg(&vm);
+            uint8_t a = fetchArg(vm);
             push(&(vm->stack), (a << 1));
         } break;
         case BIT_SHIFT_LEFT_X: {
@@ -615,7 +615,7 @@ static void execute(VM *vm){
             push(&(vm->stack), (a >> 1));
         } break;
         case BIT_SHIFT_RIGHT_IM: {
-            uint8_t a = fetchArg(&vm);
+            uint8_t a = fetchArg(vm);
             push(&(vm->stack), (a >> 1));
         } break;
         case BIT_SHIFT_RIGHT_X: {
@@ -632,14 +632,14 @@ static void execute(VM *vm){
         } break;
         case BIT_AND_IM: {
             uint8_t a, b;
-            b = fetchArg(&vm);
+            b = fetchArg(vm);
             a = pop(&(vm->stack));
             push(&(vm->stack), (a & b));
         } break;
         case BIT_AND_IM_L: {
             uint8_t a, b;
-            b = fetchArg(&vm);
-            a = fetchArg(&vm);
+            b = fetchArg(vm);
+            a = fetchArg(vm);
             push(&(vm->stack), (a & b));
         } break;
         case BIT_AND_X: {
@@ -663,14 +663,14 @@ static void execute(VM *vm){
         } break;
         case BIT_OR_IM: {
             uint8_t a, b;
-            b = fetchArg(&vm);
+            b = fetchArg(vm);
             a = pop(&(vm->stack));
             push(&(vm->stack), (a | b));
         } break;
         case BIT_OR_IM_L: {
             uint8_t a, b;
-            b = fetchArg(&vm);
-            a = fetchArg(&vm);
+            b = fetchArg(vm);
+            a = fetchArg(vm);
             push(&(vm->stack), (a | b));
         } break;
         case BIT_OR_X: {
@@ -694,14 +694,14 @@ static void execute(VM *vm){
         } break;
         case BIT_XOR_IM: {
             uint8_t a, b;
-            b = fetchArg(&vm);
+            b = fetchArg(vm);
             a = pop(&(vm->stack));
             push(&(vm->stack), (a ^ b));
         } break;
         case BIT_XOR_IM_L: {
             uint8_t a, b;
-            b = fetchArg(&vm);
-            a = fetchArg(&vm);
+            b = fetchArg(vm);
+            a = fetchArg(vm);
             push(&(vm->stack), (a ^ b));
         } break;
         case BIT_XOR_X: {
@@ -722,7 +722,8 @@ static void execute(VM *vm){
             push(&(vm->stack), ~a);
         } break;
         case BIT_NOT_IM: {
-            uint8_t a = fetchArg(&vm);
+            uint8_t a = fetchArg(vm);
+            push(&(vm->stack), ~a);
         } break;
         case BIT_NOT_X: {
             push(&(vm->stack), ~(vm->REG_X));
@@ -744,7 +745,7 @@ static void execute(VM *vm){
         case IS_LT_IM: {
             uint8_t a, b;
             b = peak(&(vm->stack));
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(b < a){
                 vm->flags.B = 1;
             }
@@ -772,7 +773,7 @@ static void execute(VM *vm){
         } break;
         case IS_LT_X_IM: {
             uint8_t a;
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(vm->REG_X < a){
                 vm->flags.B = 1;
             }
@@ -789,13 +790,13 @@ static void execute(VM *vm){
         } break;
         case IS_LT_Y_IM: {
             uint8_t a;
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(vm->REG_Y < a){
                 vm->flags.B = 1;
             }
         } break;
         case IS_LT_Y_X: {
-            if(vm->REG_Y < vm->REG_Y){
+            if(vm->REG_Y < vm->REG_X){
                 vm->flags.B = 1;
             }
         } break;
@@ -806,7 +807,7 @@ static void execute(VM *vm){
         } break;
         case IS_LT_Z_IM: {
             uint8_t a;
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(vm->REG_Z < a){
                 vm->flags.B = 1;
             }
@@ -833,7 +834,7 @@ static void execute(VM *vm){
         case IS_GT_IM: {
             uint8_t a, b;
             b = peak(&(vm->stack));
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(b > a){
                 vm->flags.B = 1;
             }
@@ -861,7 +862,7 @@ static void execute(VM *vm){
         } break;
         case IS_GT_X_IM: {
             uint8_t a;
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(vm->REG_X > a){
                 vm->flags.B = 1;
             }
@@ -878,13 +879,13 @@ static void execute(VM *vm){
         } break;
         case IS_GT_Y_IM: {
             uint8_t a;
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(vm->REG_Y > a){
                 vm->flags.B = 1;
             }
         } break;
         case IS_GT_Y_X: {
-            if(vm->REG_Y > vm->REG_Y){
+            if(vm->REG_Y > vm->REG_X){
                 vm->flags.B = 1;
             }
         } break;
@@ -895,7 +896,7 @@ static void execute(VM *vm){
         } break;
         case IS_GT_Z_IM: {
             uint8_t a;
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(vm->REG_Z > a){
                 vm->flags.B = 1;
             }
@@ -922,7 +923,7 @@ static void execute(VM *vm){
         case IS_EQ_IM: {
             uint8_t a, b;
             b = peak(&(vm->stack));
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(b == a){
                 vm->flags.B = 1;
             }
@@ -950,7 +951,7 @@ static void execute(VM *vm){
         } break;
         case IS_EQ_X_IM: {
             uint8_t a;
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(vm->REG_X == a){
                 vm->flags.B = 1;
             }
@@ -967,13 +968,13 @@ static void execute(VM *vm){
         } break;
         case IS_EQ_Y_IM: {
             uint8_t a;
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(vm->REG_Y == a){
                 vm->flags.B = 1;
             }
         } break;
         case IS_EQ_Y_X: {
-            if(vm->REG_Y == vm->REG_Y){
+            if(vm->REG_Y == vm->REG_X){
                 vm->flags.B = 1;
             }
         } break;
@@ -984,7 +985,7 @@ static void execute(VM *vm){
         } break;
         case IS_EQ_Z_IM: {
             uint8_t a;
-            a = fetchArg(&vm);
+            a = fetchArg(vm);
             if(vm->REG_Z == a){
                 vm->flags.B = 1;
             }

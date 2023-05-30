@@ -12,15 +12,16 @@ void init_stack(Stack *s){
 void push(Stack *s, uint8_t value){
     s->data[s->top] = value;
     
-    if(s->top > 0){
+    if(s->top != 0){
         s->top--;
         s->count++;
     }
 }
 
+// fixed bug
 // pop a value off the stack
 uint8_t pop(Stack *s){ 
-    if(s->top > STACK_MAX){
+    if(s->top != STACK_MAX){
         s->top++;
         s->count--;    
     } 
@@ -33,7 +34,7 @@ uint8_t pop(Stack *s){
 
 // peak at the top value on the stack without removing it
 uint8_t peak(Stack *s){
-    if(s->top > STACK_MAX){
+    if(s->top != STACK_MAX){
         return s->data[s->top+1];
     }
     return s->data[s->top];
@@ -41,7 +42,7 @@ uint8_t peak(Stack *s){
 
 // pop and discard the top value on the stack
 void drop(Stack *s){
-    if(s->top > STACK_MAX){
+    if(s->top != STACK_MAX){
         s->top++;
         s->count--;    
     } 
