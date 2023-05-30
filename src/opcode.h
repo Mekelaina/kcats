@@ -37,7 +37,7 @@ typedef enum Opcode {
     PRINT,
     PRINT_X,
     PRINT_Y,
-    INPUT,  
+    INPUT_NUMBER,  
     JUMP,    
     JUMP_IM, 
     JUMP_X,  
@@ -171,6 +171,8 @@ typedef enum Opcode {
     IS_EQ_Z_X,
     IS_EQ_Z_Y,
 
+
+    INPUT_ASCII,
 
     HALT = 255
 
