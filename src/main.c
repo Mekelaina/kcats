@@ -1,22 +1,19 @@
 #include <stdio.h>
 #include <stdint.h>
 
-//#include "stack.h"
+#include "input.h"
 #include "vm.h"
 #include "opcode.h"
 
 int main(int argc, char *argv[]){
 
 
-    // Stack s;
-    // init_stack(&s);
-    // uint8_t data[] = {10, 12, 30, 40, 50};
-    // push(&s, 5);
-    // dump(&s);
+    uint8_t a = getNumber();
+    printf("input val (dec): %d\n", a);
+    printf("input val (hex): %x\n", a);
+ 
 
-
-
-    // return 0;
+    return 0;
 
 
     //simple test program to get infrastructure working
