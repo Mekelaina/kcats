@@ -1026,9 +1026,7 @@ void init_vm(VM *vm, uint8_t *program, uint16_t programSize){
     vm->OP = 0;
     vm->program = program;
     vm->programSize = programSize;
-    for(int i = 0; i < DATABUFFER_SIZE; ++i){
-        vm->dataBuffer[i] = 0;
-    }
+
 }
 
 void clock(VM *vm){
