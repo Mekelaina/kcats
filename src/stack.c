@@ -110,6 +110,14 @@ void rotateNumberOfItems(Stack *s, uint16_t count){
 }
 
 
+uint8_t peak_back(Stack *s, uint8_t n){
+    if(s->count < n){
+        return s->data[s->top+s->count];
+    }
+    return s->data[s->top+(n+1)];
+}
+
+
 void push_ints(Stack *s, uint8_t values[], uint16_t count){
     for (int i = 0; i < count; ++i){
         push(s, values[i]);

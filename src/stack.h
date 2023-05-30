@@ -23,6 +23,9 @@ uint8_t pop(Stack *s);
 // peak at the top value on the stack without removing it
 uint8_t peak(Stack *s);
 
+//peak at the nth value down the stack
+uint8_t peak_back(Stack *s, uint8_t n);
+
 // pop and discard the top value on the stack
 void drop(Stack *s);
 

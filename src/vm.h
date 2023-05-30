@@ -5,6 +5,8 @@
 #include "stack.h"
 //#include "opcode.h"
 
+#define DATABUFFER_SIZE 16
+
 typedef struct flags{
     unsigned C : 1; // carry flag
     unsigned B : 1; // boolean flag
@@ -22,6 +24,7 @@ typedef struct machine{
     uint8_t  REG_Z;
     uint16_t PC;
     uint8_t  OP;
+    uint8_t  dataBuffer[DATABUFFER_SIZE];
     uint8_t *program;
     uint16_t programSize;
 } VM;
