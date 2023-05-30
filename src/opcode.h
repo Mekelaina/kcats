@@ -1,6 +1,7 @@
 #ifndef KCATS_OPCODE_H
 #define KCATS_OPCODE_H
 
+//TODO: Update Docs with INPUT_ASCII and INPUT_NUMBER change
 
 typedef enum Opcode {
     NO_OP,
@@ -37,7 +38,8 @@ typedef enum Opcode {
     PRINT,
     PRINT_X,
     PRINT_Y,
-    INPUT_NUMBER,  
+    INPUT_NUMBER,
+    INPUT_ASCII,  
     JUMP,    
     JUMP_IM, 
     JUMP_X,  
@@ -170,9 +172,7 @@ typedef enum Opcode {
     IS_EQ_Z_IM,
     IS_EQ_Z_X,
     IS_EQ_Z_Y,
-
-
-    INPUT_ASCII,
+   
 
     HALT = 255
 
