@@ -14,6 +14,7 @@ typedef struct flags {
 } Flags;
 
 typedef struct vm {
+    Flags flags;
     uint16_t PC;                // Program Counter
     uint16_t RTN;               // Return address register for subroutines
     uint16_t programSize;       // Size of current program
