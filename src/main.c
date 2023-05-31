@@ -1,31 +1,25 @@
 #include <stdio.h>
 
-#include "alu.h"
-#include "flags.h"
+#include "vm.h"
 
 int main(){
 
-    uint8_t a = 80;
-    uint8_t b = 80;
-    Flags flags;
-    flags.Carry = 0;
-
-    addCarry(&a, &flags, b);
-
-    printf("Value: %hhu\n", a);
-    printf("Carry: %u\n", flags.Carry);
-    printf("Negative: %u\n", flags.Negative);
-    printf("Overflow: %u\n", flags.Overflow);
-
-    a = 80;
-    b = 176;
+    VM vm;
+    uint8_t program[] = {0};
+    init_vm(&vm, program, 1);
     
-    SubtractBorrow(&a, &flags, b);
+    pushStack(&vm, 2);
+    pushStack(&vm, 4);
+    pushStack(&vm, 8);
+    pushStack(&vm, 16);
+    pushStack(&vm, 32);
+    pushStack(&vm, 64);
 
-    printf("Value: %hhu\n", a);
-    printf("Carry: %u\n", flags.Carry);
-    printf("Negative: %u\n", flags.Negative);
-    printf("Overflow: %u\n", flags.Overflow);
+    uint8_t x = popStack(&vm);
+
+    printf("tip tip: %d %d", x, vm.Z);
+
+    dumpStack(&vm);    
 
     return 0;
 }

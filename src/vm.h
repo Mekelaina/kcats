@@ -27,5 +27,10 @@ void init_vm(VM *vm, uint8_t *program, uint16_t programSize);
 
 void clock(VM *vm);
 
+void dumpStack(VM *vm);
+
+void pushStack(VM *vm, uint8_t value);
+
+uint8_t popStack(VM *vm);
 
 #endif
