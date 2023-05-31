@@ -26,6 +26,7 @@ void init_vm(VM *vm, uint8_t *program, uint16_t programSize){
     vm->flags.Overflow = 0;
     vm->flags.Carry = 0;
     vm->flags.Halt = 0;
+    vm->flags.Zero = 0;
 
     vm->PC = 0;
     vm->RTN = 0;

@@ -2,16 +2,10 @@
 #define KCATS_VM_H
 
 #include <stdint.h>
+#include "flags.h"
 
 #define STACK_SIZE 256
 
-typedef struct flags {
-    unsigned Negative : 1;
-    unsigned Overflow : 1;
-    unsigned Unused   : 4;
-    unsigned Carry    : 1;
-    unsigned Halt     : 1;
-} Flags;
 
 typedef struct vm {
     Flags flags;
