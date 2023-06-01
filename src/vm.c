@@ -117,9 +117,9 @@ static void executeInstruction(VM *vm){
         case STORE_A: {
             pushStack(vm, vm->A);
         } break;
-        case STORE_A_IM: {
+        /* case STORE_A_IM: {
             // TODO
-        } break;
+        } break; */
         case STORE_A_X: {
             vm->X = vm->A;
         } break;
