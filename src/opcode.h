@@ -1,7 +1,7 @@
 #ifndef OPCODE_KCATS_H
 #define OPCODE_KCATS_H
 
-typedef enum Opcode {
+typedef enum opcode {
 
     NO_OP,
     LOAD_A,
@@ -179,6 +179,6 @@ typedef enum Opcode {
 
     HALT = 255
 
-};
+} Opcode;
 
 #endif

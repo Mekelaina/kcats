@@ -208,25 +208,25 @@ static void executeInstruction(VM *vm){
             addCarry(&(vm->A), &(vm->flags), val);
         } break;
         case ADD_X: {
-            addCarry(&(vm->A), &(vm->flags), &(vm->X));
+            addCarry(&(vm->A), &(vm->flags), (vm->X));
         } break;
         case ADD_Y: {
-            addCarry(&(vm->A), &(vm->flags), &(vm->Y));
+            addCarry(&(vm->A), &(vm->flags), (vm->Y));
         } break;
         case ADD_Z: {
-            addCarry(&(vm->A), &(vm->flags), &(vm->Z));
+            addCarry(&(vm->A), &(vm->flags), (vm->Z));
         } break;
         case ADD_R0: {
-            addCarry(&(vm->A), &(vm->flags), &(vm->R0));
+            addCarry(&(vm->A), &(vm->flags), (vm->R0));
         } break;
         case ADD_R1: {
-            addCarry(&(vm->A), &(vm->flags), &(vm->R1));
+            addCarry(&(vm->A), &(vm->flags), (vm->R1));
         } break;
         case ADD_R2: {
-            addCarry(&(vm->A), &(vm->flags), &(vm->R2));
+            addCarry(&(vm->A), &(vm->flags), (vm->R2));
         } break;
         case ADD_R3: {
-            addCarry(&(vm->A), &(vm->flags), &(vm->R3));
+            addCarry(&(vm->A), &(vm->flags), (vm->R3));
         } break;
         case SUBTRACT: {
             uint8_t val = popStack(vm);
@@ -237,25 +237,25 @@ static void executeInstruction(VM *vm){
             SubtractBorrow(&(vm->A), &(vm->flags), val);
         } break;
         case SUBTRACT_X: {
-            SubtractBorrow(&(vm->A), &(vm->flags), &(vm->X));
+            SubtractBorrow(&(vm->A), &(vm->flags), (vm->X));
         } break;
         case SUBTRACT_Y: {
-            SubtractBorrow(&(vm->A), &(vm->flags), &(vm->Y));
+            SubtractBorrow(&(vm->A), &(vm->flags), (vm->Y));
         } break;
         case SUBTRACT_Z: {
-            SubtractBorrow(&(vm->A), &(vm->flags), &(vm->Z));
+            SubtractBorrow(&(vm->A), &(vm->flags), (vm->Z));
         } break;
         case SUBTRACT_R0: {
-            SubtractBorrow(&(vm->A), &(vm->flags), &(vm->R0));
+            SubtractBorrow(&(vm->A), &(vm->flags), (vm->R0));
         } break;
         case SUBTRACT_R1: {
-            SubtractBorrow(&(vm->A), &(vm->flags), &(vm->R1));
+            SubtractBorrow(&(vm->A), &(vm->flags), (vm->R1));
         } break;
         case SUBTRACT_R2: {
-            SubtractBorrow(&(vm->A), &(vm->flags), &(vm->R2));
+            SubtractBorrow(&(vm->A), &(vm->flags), (vm->R2));
         } break;
         case SUBTRACT_R3: {
-            SubtractBorrow(&(vm->A), &(vm->flags), &(vm->R3));
+            SubtractBorrow(&(vm->A), &(vm->flags), (vm->R3));
         } break;
         case SIGN_SHIFT_LEFT: {
             signedShift(&(vm->A), &(vm->flags), 0);
@@ -284,25 +284,25 @@ static void executeInstruction(VM *vm){
             bitAND(&(vm->A), &(vm->flags), val);
         } break;
         case BIT_AND_X: {
-            bitAND(&(vm->A), &(vm->flags), &(vm->X));
+            bitAND(&(vm->A), &(vm->flags), (vm->X));
         } break;
         case BIT_AND_Y: {
-            bitAND(&(vm->A), &(vm->flags), &(vm->Y));
+            bitAND(&(vm->A), &(vm->flags), (vm->Y));
         } break;
         case BIT_AND_Z: {
-            bitAND(&(vm->A), &(vm->flags), &(vm->Z));
+            bitAND(&(vm->A), &(vm->flags), (vm->Z));
         } break;
         case BIT_AND_R0: {
-            bitAND(&(vm->A), &(vm->flags), &(vm->R0));
+            bitAND(&(vm->A), &(vm->flags), (vm->R0));
         } break;
         case BIT_AND_R1: {
-            bitAND(&(vm->A), &(vm->flags), &(vm->R1));
+            bitAND(&(vm->A), &(vm->flags), (vm->R1));
         } break;
         case BIT_AND_R2: {
-            bitAND(&(vm->A), &(vm->flags), &(vm->R2));
+            bitAND(&(vm->A), &(vm->flags), (vm->R2));
         } break;
         case BIT_AND_R3: {
-            bitAND(&(vm->A), &(vm->flags), &(vm->R3));
+            bitAND(&(vm->A), &(vm->flags), (vm->R3));
         } break;
         case BIT_OR: {
             uint8_t val = popStack(vm);
@@ -313,25 +313,25 @@ static void executeInstruction(VM *vm){
             bitOR(&(vm->A), &(vm->flags), val);
         } break;
         case BIT_OR_X: {
-            bitOR(&(vm->A), &(vm->flags), &(vm->X));
+            bitOR(&(vm->A), &(vm->flags), (vm->X));
         } break;
         case BIT_OR_Y: {
-            bitOR(&(vm->A), &(vm->flags), &(vm->Y));
+            bitOR(&(vm->A), &(vm->flags), (vm->Y));
         } break;
         case BIT_OR_Z: {
-            bitOR(&(vm->A), &(vm->flags), &(vm->Z));
+            bitOR(&(vm->A), &(vm->flags), (vm->Z));
         } break;
         case BIT_OR_R0: {
-            bitOR(&(vm->A), &(vm->flags), &(vm->R0));
+            bitOR(&(vm->A), &(vm->flags), (vm->R0));
         } break;
         case BIT_OR_R1: {
-            bitOR(&(vm->A), &(vm->flags), &(vm->R1));
+            bitOR(&(vm->A), &(vm->flags), (vm->R1));
         } break;
         case BIT_OR_R2: {
-            bitOR(&(vm->A), &(vm->flags), &(vm->R2));
+            bitOR(&(vm->A), &(vm->flags), (vm->R2));
         } break;
         case BIT_OR_R3: {
-            bitOR(&(vm->A), &(vm->flags), &(vm->R3));
+            bitOR(&(vm->A), &(vm->flags), (vm->R3));
         } break;
         case BIT_XOR: {
             uint8_t val = popStack(vm);
@@ -342,25 +342,25 @@ static void executeInstruction(VM *vm){
             bitXOR(&(vm->A), &(vm->flags), val);
         } break;
         case BIT_XOR_X: {
-            bitXOR(&(vm->A), &(vm->flags), &(vm->X));
+            bitXOR(&(vm->A), &(vm->flags), (vm->X));
         } break;
         case BIT_XOR_Y: {
-            bitXOR(&(vm->A), &(vm->flags), &(vm->Y));
+            bitXOR(&(vm->A), &(vm->flags), (vm->Y));
         } break;
         case BIT_XOR_Z: {
-            bitXOR(&(vm->A), &(vm->flags), &(vm->Z));
+            bitXOR(&(vm->A), &(vm->flags), (vm->Z));
         } break;
         case BIT_XOR_R0: {
-            bitXOR(&(vm->A), &(vm->flags), &(vm->R0));
+            bitXOR(&(vm->A), &(vm->flags), (vm->R0));
         } break;
         case BIT_XOR_R1: {
-            bitXOR(&(vm->A), &(vm->flags), &(vm->R1));
+            bitXOR(&(vm->A), &(vm->flags), (vm->R1));
         } break;
         case BIT_XOR_R2: {
-            bitXOR(&(vm->A), &(vm->flags), &(vm->R2));
+            bitXOR(&(vm->A), &(vm->flags), (vm->R2));
         } break;
         case BIT_XOR_R3: {
-            bitXOR(&(vm->A), &(vm->flags), &(vm->R3));
+            bitXOR(&(vm->A), &(vm->flags), (vm->R3));
         } break;
         case SET_CARRY: {
             vm->flags.Carry = 1;
