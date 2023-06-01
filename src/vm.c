@@ -378,235 +378,391 @@ static void executeInstruction(VM *vm){
             vm->flags.Negative = 0;
         } break;
         case BRANCH_PLUS: {
-
+            if(vm->flags.Negative == 0){
+                uint8_t low = popStack(vm);
+                uint8_t high = popStack(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_PLUS_IM: {
-
+            if(vm->flags.Negative == 0){
+                uint8_t low = fetchArg(vm);
+                uint8_t high = fetchArg(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_PLUS_XY: {
-
+            if(vm->flags.Negative == 0){
+                uint16_t addr = ((vm->Y) << 8) | (vm->X);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_PLUS_R0R1: {
-
+            if(vm->flags.Negative == 0){
+                uint16_t addr = ((vm->R1) << 8) | (vm->R0);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_PLUS_R2R3: {
-
+            if(vm->flags.Negative == 0){
+                uint16_t addr = ((vm->R3) << 8) | (vm->R2);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_MINUS: {
-
+            if(vm->flags.Negative == 1){
+                uint8_t low = popStack(vm);
+                uint8_t high = popStack(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_MINUS_IM: {
-
+            if(vm->flags.Negative == 1){
+                uint8_t low = fetchArg(vm);
+                uint8_t high = fetchArg(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_MINUS_XY: {
-
+            if(vm->flags.Negative == 1){
+                uint16_t addr = ((vm->Y) << 8) | (vm->X);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_MINUS_R0R1: {
-
+            if(vm->flags.Negative == 1){
+                uint16_t addr = ((vm->R1) << 8) | (vm->R0);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_MINUS_R2R3: {
-
+            if(vm->flags.Negative == 1){
+                uint16_t addr = ((vm->R3) << 8) | (vm->R2);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_OVERFLOW_SET: {
-
+            if(vm->flags.Overflow == 1){
+                uint8_t low = popStack(vm);
+                uint8_t high = popStack(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_OVERFLOW_SET_IM: {
-
+            if(vm->flags.Overflow == 1){
+                uint8_t low = fetchArg(vm);
+                uint8_t high = fetchArg(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_OVERFLOW_SET_XY: {
-
+            if(vm->flags.Overflow == 1){
+                uint16_t addr = ((vm->Y) << 8) | (vm->X);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_OVERFLOW_SET_R0R1: {
-
+            if(vm->flags.Overflow == 1){
+                uint16_t addr = ((vm->R1) << 8) | (vm->R0);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_OVERFLOW_SET_R2R3: {
-
+            if(vm->flags.Overflow == 1){
+                uint16_t addr = ((vm->R3) << 8) | (vm->R2);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_OVERFLOW_CLEAR: {
-
+            if(vm->flags.Overflow == 0){
+                uint8_t low = popStack(vm);
+                uint8_t high = popStack(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_OVERFLOW_CLEAR_IM: {
-
+            if(vm->flags.Overflow == 0){
+                uint8_t low = fetchArg(vm);
+                uint8_t high = fetchArg(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_OVERFLOW_CLEAR_XY: {
-
+            if(vm->flags.Overflow == 0){
+                uint16_t addr = ((vm->Y) << 8) | (vm->X);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_OVERFLOW_CLEAR_R0R1: {
-
+            if(vm->flags.Overflow == 0){
+                uint16_t addr = ((vm->R1) << 8) | (vm->R0);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_OVERFLOW_CLEAR_R2R3: {
-
+            if(vm->flags.Overflow == 0){
+                uint16_t addr = ((vm->R3) << 8) | (vm->R2);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_CARRY_SET: {
-
+            if(vm->flags.Overflow == 1){
+                uint8_t low = popStack(vm);
+                uint8_t high = popStack(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_CARRY_SET_IM: {
-
+            if(vm->flags.Overflow == 1){
+                uint8_t low = fetchArg(vm);
+                uint8_t high = fetchArg(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_CARRY_SET_XY: {
-
+            if(vm->flags.Overflow == 1){
+                uint16_t addr = ((vm->Y) << 8) | (vm->X);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_CARRY_SET_R0R1: {
-
+            if(vm->flags.Overflow == 1){
+                uint16_t addr = ((vm->R1) << 8) | (vm->R0);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_CARRY_SET_R2R3: {
-
+            if(vm->flags.Overflow == 1){
+                uint16_t addr = ((vm->R3) << 8) | (vm->R2);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_CARRY_CLEAR: {
-
+            if(vm->flags.Overflow == 0){
+                uint8_t low = popStack(vm);
+                uint8_t high = popStack(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_CARRY_CLEAR_IM: {
-
+            if(vm->flags.Overflow == 0){
+                uint8_t low = fetchArg(vm);
+                uint8_t high = fetchArg(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_CARRY_CLEAR_XY: {
-
+            if(vm->flags.Overflow == 0){
+                uint16_t addr = ((vm->Y) << 8) | (vm->X);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_CARRY_CLEAR_R0R1: {
-
+            if(vm->flags.Overflow == 0){
+                uint16_t addr = ((vm->R1) << 8) | (vm->R0);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_CARRY_CLEAR_R2R3: {
-
+            if(vm->flags.Overflow == 0){
+                uint16_t addr = ((vm->R3) << 8) | (vm->R2);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_EQUAL: {
-
+            if(vm->flags.Zero == 1){
+                uint8_t low = popStack(vm);
+                uint8_t high = popStack(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_EQUAL_IM: {
-
+            if(vm->flags.Zero == 1){
+                uint8_t low = fetchArg(vm);
+                uint8_t high = fetchArg(vm);
+                uint16_t addr = (high << 8) | low;
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_EQUAL_XY: {
-
+            if(vm->flags.Zero == 1){
+                uint16_t addr = ((vm->Y) << 8) | (vm->X);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_EQUAL_R0R1: {
-
+            if(vm->flags.Zero == 1){
+                uint16_t addr = ((vm->R1) << 8) | (vm->R0);
+                vm->PC = addr;
+            } break;
         } break;
         case BRANCH_EQUAL_R2R3: {
-
-        } break;
-        case BRANCH_NOT_EQUAL: {
-
-        } break;
-        case BRANCH_NOT_EQUAL_IM: {
-
-        } break;
-        case BRANCH_NOT_EQUAL_XY: {
-
-        } break;
-        case BRANCH_NOT_EQUAL_R0R1: {
-
-        } break;
-        case BRANCH_NOT_EQUAL_R2R3: {
-
+            if(vm->flags.Zero == 1){
+                uint16_t addr = ((vm->R3) << 8) | (vm->R2);
+                vm->PC = addr;
+            } break;
         } break;
         case JUMP: {
-
+            uint8_t low = popStack(vm);
+            uint8_t high = popStack(vm);
+            uint16_t addr = (high << 8) | low;
+            vm->PC = addr;
         } break;
         case JUMP_IM: {
-
+            uint8_t low = fetchArg(vm);
+            uint8_t high = fetchArg(vm);
+            uint16_t addr = (high << 8) | low;
+            vm->PC = addr;
         } break;
         case JUMP_XY: {
-
+            uint16_t addr = ((vm->Y) << 8) | (vm->X);
+            vm->PC = addr;
         } break;
         case JUMP_R0R1: {
-
+            uint16_t addr = ((vm->R1) << 8) | (vm->R0);
+            vm->PC = addr;
         } break;
         case JUMP_R2R3: {
-
+            uint16_t addr = ((vm->R3) << 8) | (vm->R2);
+            vm->PC = addr;
         } break;
         case JUMP_SUBROUTINE: {
-
+            uint8_t low = popStack(vm);
+            uint8_t high = popStack(vm);
+            vm->RTN = vm->PC;
+            uint16_t addr = (high << 8) | low;
+            vm->PC = addr;
         } break;
         case JUMP_SUBROUTINE_IM: {
-
+            uint8_t low  = fetchArg(vm);
+            uint8_t high = fetchArg(vm);
+            vm->RTN = vm->PC;
+            uint16_t addr = (high << 8) | low;
+            vm->PC = addr;
         } break;
-        case JUMP_SUBROUTINE_XY: {
-
+        /* case JUMP_SUBROUTINE_XY: {
+            uint16_t addr = ((vm->Y) << 8) | (vm->X);
+            vm->PC = addr;
         } break;
         case JUMP_SUBROUTINE_R0R1: {
 
         } break;
         case JUMP_SUBROUTINE_R2R3: {
 
-        } break;
+        } break; */
         case PRINT_SIGNED: {
-
+            int8_t val = (int8_t) popStack(vm);
+            printf("%d\n", val);
         } break;
         case PRINT_SIGNED_IM: {
-
+            int8_t val = (int8_t) fetchArg(vm);
+            printf("%d\n", val);
         } break;
         case PRINT_SIGNED_X: {
-
+            int8_t val = (int8_t) vm->X;
+            printf("%d\n", val);
         } break;
         case PRINT_SIGNED_Y: {
-
+            int8_t val = (int8_t) vm->Y;
+            printf("%d\n", val);
         } break;
         case PRINT_SIGNED_Z: {
-
+            int8_t val = (int8_t) vm->Z;
+            printf("%d\n", val);
         } break;
         case PRINT_SIGNED_R0: {
-
+            int8_t val = (int8_t) vm->R0;
+            printf("%d\n", val);
         } break;
         case PRINT_SIGNED_R1: {
-
+            int8_t val = (int8_t) vm->R1;
+            printf("%d\n", val);
         } break;
         case PRINT_SIGNED_R2: {
-
+            int8_t val = (int8_t) vm->R2;
+            printf("%d\n", val);
         } break;
         case PRINT_SIGNED_R3: {
-
+            int8_t val = (int8_t) vm->R3;
+            printf("%d\n", val);
         } break;
         case PRINT_UNSIGNED: {
-
+            uint8_t val = popStack(vm);
+            printf("%hhu\n", val);
         } break;
         case PRINT_UNSIGNED_IM: {
-
+            uint8_t val = fetchArg(vm);
+            printf("%hhu\n", val);
         } break;
         case PRINT_UNSIGNED_X: {
-
+            printf("%hhu\n", vm->X);
         } break;
         case PRINT_UNSIGNED_Y: {
-
+            printf("%hhu\n", vm->Y);
         } break;
         case PRINT_UNSIGNED_Z: {
-
+            printf("%hhu\n", vm->Z);
         } break;
         case PRINT_UNSIGNED_R0: {
-
+            printf("%hhu\n", vm->R0);
         } break;
         case PRINT_UNSIGNED_R1: {
-
+            printf("%hhu\n", vm->R1);
         } break;
         case PRINT_UNSIGNED_R2: {
-
+            printf("%hhu\n", vm->R2);
         } break;
         case PRINT_UNSIGNED_R3: {
-
+            printf("%hhu\n", vm->R3);
         } break;
         case PRINT_ASCII: {
-
+            char val = (char) popStack(vm);
+            printf("%c", val);
         } break;
         case PRINT_ASCII_IM: {
-
+            char val = (char) popStack(vm);
+            printf("%c", val);
         } break;
         case PRINT_ASCII_X: {
-
+            char val = (char) vm->X;
+            printf("%c", val);
         } break;
         case PRINT_ASCII_Y: {
-
+            char val = (char) vm->Y;
+            printf("%c", val);
         } break;
         case PRINT_ASCII_Z: {
-
+            char val = (char) vm->Z;
+            printf("%c", val);
         } break;
         case PRINT_ASCII_R0: {
-
+            char val = (char) vm->R0;
+            printf("%c", val);
         } break;
         case PRINT_ASCII_R1: {
-
+            char val = (char) vm->R1;
+            printf("%c", val);
         } break;
         case PRINT_ASCII_R2: {
-
+            char val = (char) vm->R2;
+            printf("%c", val);
         } break;
         case PRINT_ASCII_R3: {
-
+            char val = (char) vm->R3;
+            printf("%c", val);
         } break;
         case INPUT_NUMBER: {
 
