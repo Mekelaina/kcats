@@ -40,12 +40,27 @@ void rotateBits(uint8_t *Accumulator, Flags *flags, uint8_t direction);
 */
 void addCarry(uint8_t *Accumulator, Flags *flags, uint8_t argument);
 
+
+
+void multiply(uint8_t *Accumulator, Flags *flags, uint8_t argument);
+
+void multiplyLong(uint8_t *R0, uint8_t *R1, Flags *flags, uint8_t Accumulator, uint8_t argument);
+
+void divide(uint8_t *Accumulator, Flags *flags, uint8_t argument);
+
+void divideLong(uint8_t *R0, uint8_t *R1, Flags *flags, uint8_t Accumulator, uint8_t argument);
+
+void modulo(uint8_t *Accumulator, Flags *flags, uint8_t argument);
+
+void moduloLong(uint8_t *R0, uint8_t *R1, Flags *flags, uint8_t Accumulator, uint8_t argument);
+
+
 /*
 * Subtracts argument and borrow from Accumulator, updates flags.
 * Carry clear: difference
 * Carry set: difference - 1
 */
-void SubtractBorrow(uint8_t *Accumulator, Flags *flags, uint8_t argument);
+void subtractBorrow(uint8_t *Accumulator, Flags *flags, uint8_t argument);
 
 /* 
 * preforms bitwise AND on accumulator and argument.

@@ -108,12 +108,135 @@ void addCarry(uint8_t *Accumulator, Flags *flags, uint8_t argument){
 // Subtracts argument and borrow from Accumulator, updates flags.
 // Carry clear: difference
 // Carry set: difference - 1
-void SubtractBorrow(uint8_t *Accumulator, Flags *flags, uint8_t argument){
+void subtractBorrow(uint8_t *Accumulator, Flags *flags, uint8_t argument){
     uint8_t val = *Accumulator;
     flags->Carry = ~(flags->Carry);
     addCarry(&val, flags, ~argument);
     *Accumulator = val;
 }
+
+
+void multiply(uint8_t *Accumulator, Flags *flags, uint8_t argument){
+    uint8_t val = *Accumulator;
+    if(val * argument > 255){
+        flags->Carry = 1;
+    } else {
+        flags->Carry = 0;
+    }
+    uint8_t z = (val * argument);
+
+    if((val ^ z) & (argument ^ z) & 0x80){
+        flags->Overflow = 1;
+    } else {
+        flags->Overflow = 0;
+    }
+    
+    if(z == 0){
+    flags->Zero = 1;
+    } else {
+        flags->Zero = 0;
+    }
+
+    flags->Negative = ((z & BIT_7) >> 7);
+    *Accumulator = z; 
+
+}
+
+void multiplyLong(uint8_t *R0, uint8_t *R1, Flags *flags, uint8_t Accumulator, uint8_t argument){
+    uint16_t res = Accumulator * argument;
+    
+    if((Accumulator * argument) > UINT16_MAX){
+        flags->Carry = 1;
+    } else {
+        flags->Carry = 1;
+    }
+
+    if(((Accumulator & BIT_7) && (argument & BIT_7)) || (!(Accumulator & BIT_7) && !(argument & BIT_7))){
+        if(res & 0x8000){
+            flags->Overflow = 1;
+            flags->Negative = 1;
+        } else {
+            flags->Overflow = 0;
+            flags->Negative = 0;
+        }
+    } else {
+        if(res & 0x8000){
+            flags->Overflow = 0;
+            flags->Negative = 1;
+        } else {
+            flags->Overflow = 1;
+            flags->Negative = 0;
+        }
+    }
+    
+
+    if(res == 0){
+        flags->Zero = 1;
+    } else {
+        flags->Zero = 0;
+    }
+
+    *R1 = res >> 8;
+    *R0 = res & 0x00FF;
+}
+
+void divide(uint8_t *Accumulator, Flags *flags, uint8_t argument){
+    uint8_t val = *Accumulator;
+    if(val != 0 && argument != 0){
+        uint8_t z = val / argument;
+        if(val / argument < 0){
+            flags->Carry = 1;
+        } else {
+            flags->Carry = 0;
+        }
+
+        if(((val & BIT_7) && (argument & BIT_7)) || (!(val & BIT_7) && !(argument & BIT_7))){
+            if(z & 0x80){
+                flags->Overflow = 1;
+                flags->Negative = 1;
+            } else {
+                flags->Overflow = 0;
+                flags->Negative = 0;
+            }
+        } else {
+            if(z & 0x80){
+                flags->Overflow = 0;
+                flags->Negative = 1;
+            } else {
+                flags->Overflow = 1;
+                flags->Negative = 0;
+            }
+        }
+        if(z == 0){
+            flags->Zero = 1;
+        } else {
+            flags->Zero = 0;
+        }
+
+        *Accumulator = z;
+
+    } else {
+        flags->Zero = 1;
+        flags->Negative = 0;
+        flags->Overflow = 0;
+        flags->Carry = 0;
+    }
+}
+
+void divideLong(uint8_t *R0, uint8_t *R1, Flags *flags, uint8_t Accumulator, uint8_t argument){
+    
+}
+
+void modulo(uint8_t *Accumulator, Flags *flags, uint8_t argument){
+
+}
+
+void moduloLong(uint8_t *R0, uint8_t *R1, Flags *flags, uint8_t Accumulator, uint8_t argument){
+
+}
+
+
+
 
 
 // preforms bitwise AND on accumulator and argument.
