@@ -379,8 +379,8 @@ static void executeInstruction(VM *vm){
         } break;
         case BRANCH_PLUS: {
             if(vm->flags.Negative == 0){
-                uint8_t low = popStack(vm);
                 uint8_t high = popStack(vm);
+                uint8_t low = popStack(vm);
                 uint16_t addr = (high << 8) | low;
                 vm->PC = addr;
             } break;
@@ -413,8 +413,8 @@ static void executeInstruction(VM *vm){
         } break;
         case BRANCH_MINUS: {
             if(vm->flags.Negative == 1){
-                uint8_t low = popStack(vm);
                 uint8_t high = popStack(vm);
+                uint8_t low = popStack(vm);
                 uint16_t addr = (high << 8) | low;
                 vm->PC = addr;
             } break;
@@ -447,8 +447,8 @@ static void executeInstruction(VM *vm){
         } break;
         case BRANCH_OVERFLOW_SET: {
             if(vm->flags.Overflow == 1){
-                uint8_t low = popStack(vm);
                 uint8_t high = popStack(vm);
+                uint8_t low = popStack(vm);
                 uint16_t addr = (high << 8) | low;
                 vm->PC = addr;
             } break;
@@ -481,8 +481,8 @@ static void executeInstruction(VM *vm){
         } break;
         case BRANCH_OVERFLOW_CLEAR: {
             if(vm->flags.Overflow == 0){
-                uint8_t low = popStack(vm);
                 uint8_t high = popStack(vm);
+                uint8_t low = popStack(vm);
                 uint16_t addr = (high << 8) | low;
                 vm->PC = addr;
             } break;
@@ -515,8 +515,8 @@ static void executeInstruction(VM *vm){
         } break;
         case BRANCH_CARRY_SET: {
             if(vm->flags.Overflow == 1){
-                uint8_t low = popStack(vm);
                 uint8_t high = popStack(vm);
+                uint8_t low = popStack(vm);
                 uint16_t addr = (high << 8) | low;
                 vm->PC = addr;
             } break;
@@ -549,8 +549,8 @@ static void executeInstruction(VM *vm){
         } break;
         case BRANCH_CARRY_CLEAR: {
             if(vm->flags.Overflow == 0){
-                uint8_t low = popStack(vm);
                 uint8_t high = popStack(vm);
+                uint8_t low = popStack(vm);
                 uint16_t addr = (high << 8) | low;
                 vm->PC = addr;
             } break;
@@ -583,8 +583,8 @@ static void executeInstruction(VM *vm){
         } break;
         case BRANCH_EQUAL: {
             if(vm->flags.Zero == 1){
-                uint8_t low = popStack(vm);
                 uint8_t high = popStack(vm);
+                uint8_t low = popStack(vm);
                 uint16_t addr = (high << 8) | low;
                 vm->PC = addr;
             } break;
@@ -616,8 +616,8 @@ static void executeInstruction(VM *vm){
             } break;
         } break;
         case JUMP: {
-            uint8_t low = popStack(vm);
             uint8_t high = popStack(vm);
+            uint8_t low = popStack(vm);
             uint16_t addr = (high << 8) | low;
             vm->PC = addr;
         } break;
@@ -640,8 +640,8 @@ static void executeInstruction(VM *vm){
             vm->PC = addr;
         } break;
         case JUMP_SUBROUTINE: {
-            uint8_t low = popStack(vm);
             uint8_t high = popStack(vm);
+            uint8_t low = popStack(vm);
             vm->RTN = vm->PC;
             uint16_t addr = (high << 8) | low;
             vm->PC = addr;
